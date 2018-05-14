@@ -78,3 +78,4 @@ npx yamat link
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
 * yamat unlink --version=pack to point to npm pack generated file so we are sure the publish will go fine. 
 * yamat run X for run X on every package
+* yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.

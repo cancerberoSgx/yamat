@@ -24,6 +24,8 @@ echo "console.log('foo say: '+require('foo'))"> index.js && node index.js`)
     expect(p.stdout).toContain(`foo say: different message`)
   })
 
+
+  
   it('create other package that depends on var', ()=>{
 
     p=exec(`\\
@@ -41,4 +43,9 @@ cd project1/third && node index.js`)
 expect(p.code).toBe(0)
 expect(p.stdout).toContain(`third responds: msg from foo: different message different message`)
   })
+
+
+    it('yamat unlink', ()=>{
+        
+    })
 })

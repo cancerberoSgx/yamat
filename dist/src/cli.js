@@ -1,11 +1,7 @@
-import { link } from "./link";
-import { unlink, UnlinkConfig } from "./unlink";
-import { YamatConfig } from "./types";
-import { pwd } from "shelljs";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const args = require('yargs-parser')(process.argv.slice(2));
-const shell = require('shell')
-
+const shell = require('shell');
 // export function main (){
 //   if(args.link){
 //     return link()
@@ -18,3 +14,4 @@ const shell = require('shell')
 //     }
 //   }
 // }
+//# sourceMappingURL=cli.js.map

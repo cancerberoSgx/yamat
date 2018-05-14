@@ -1,8 +1,5 @@
-import { link } from "./link";
-import { unlink } from "./unlink";
+// just exports all public types for typings 
 
-
-export interface ConfigEntry{
-  name:string
-  path:string
-}
+export * from './types'
+export * from './unlink'
+export * from './link'

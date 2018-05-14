@@ -1,9 +1,10 @@
 import { getConfig, writeFile } from "./util";
 import { cat } from "shelljs";
 import { relative } from "path";
+import { YamatConfig } from ".";
 
-export function link(){
-  const config = getConfig()
+export function link(yamatConfig : YamatConfig){
+  const config = getConfig(yamatConfig)
   config.forEach(c => {
     const pj = JSON.parse(cat(c.path))
     Object.keys(pj.dependencies||{})
@@ -14,3 +15,6 @@ export function link(){
     writeFile(c.path, JSON.stringify(pj, null, 2))
   });
 }
+
+
+
