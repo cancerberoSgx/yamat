@@ -1,0 +1,30 @@
+{
+  "name": "yamat",
+  "version": "1.0.0",
+  "description": "yamat: yet another monorepo administration tool",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc"
+  },
+  "keywords": [
+    "monorepo",
+    "multiple packages",
+    "lerna alternative"
+  ],
+  "author": "Sebastian Gurin",
+  "license": "MIT",
+  "dependencies": {
+    "shelljs": "^0.8.1",
+    "yargs-parser": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.7",
+    "@types/node": "^8.0.24",
+    "jasmine": "^3.1.0",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.3"
+  },
+  "repository": "https://github.com/cancerberoSgx/yamat"
+}
