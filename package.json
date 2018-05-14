@@ -6,7 +6,8 @@
   "typings": "dist/src/index.d.ts",
   "scripts": {
     "watch": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
   "keywords": [
     "monorepo",
@@ -16,13 +17,14 @@
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
-    "shelljs": "^0.8.1",
     "yargs-parser": "^10.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
     "@types/node": "^8.0.24",
+    "@types/shelljs": "^0.7.9",
     "jasmine": "^3.1.0",
+    "shelljs": "^0.8.2",
     "ts-node": "^6.0.3",
     "typescript": "^2.8.3"
   },
