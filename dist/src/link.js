@@ -10,6 +10,7 @@ function link(yamatConfig) {
         modifyJSONDeps(pj, 'devDependencies', config, c);
         util_1.writePackageJson(yamatConfig, c.path, pj); // writeFile(c.path, JSON.stringify(pj, null, 2))
     });
+    console.log('Packages successfully linked!');
 }
 exports.link = link;
 function modifyJSONDeps(pj, propertyName, config, c) {

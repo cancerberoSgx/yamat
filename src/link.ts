@@ -11,6 +11,8 @@ export function link(yamatConfig: YamatConfig) {
     modifyJSONDeps(pj, 'devDependencies', config, c)
     writePackageJson(yamatConfig, c.path, pj)  // writeFile(c.path, JSON.stringify(pj, null, 2))
   });
+  console.log('Packages successfully linked!');
+  
 }
 
 function modifyJSONDeps(pj: any, propertyName: string, config: ConfigEntry[], c: ConfigEntry) {

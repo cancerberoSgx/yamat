@@ -120,3 +120,4 @@ TODO
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
 * yamat unlink --version=pack to point to npm pack generated file so we are sure the publish will go fine. 
 * possible issue : yamat run npm run build: what about dependencies - we should build the roots first and then dependants... 
+* license

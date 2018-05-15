@@ -9,17 +9,17 @@
     "build": "tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
-  "keywords": [
-    "monorepo",
-    "multiple packages",
-    "lerna alternative"
-  ],
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
     "yargs-parser": "^10.0.0",
     "shelljs": "^0.8.2"
   },
+  "files": [
+    "bin",
+    "dist",
+    "README.md"
+  ],
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
     "@types/node": "^8.0.24",
@@ -28,5 +28,17 @@
     "ts-node": "^6.0.3",
     "typescript": "^2.8.3"
   },
-  "repository": "https://github.com/cancerberoSgx/yamat"
+  "readme": "./README.md",
+  "repository": "https://github.com/cancerberoSgx/yamat",
+  "keywords": [
+    "monorepo",
+    "multiple packages",
+    "lerna alternative",
+    "lerna",
+    "rush",
+    "yarn",
+    "workspace",
+    "npm workspace",
+    "yarn workspace"
+  ]
 }

@@ -23,6 +23,8 @@ export function unlink(unlinkConfig: UnlinkConfig) {
     modifyJSONDeps(pj, 'devDependencies', unlinkConfig)
     writePackageJson(unlinkConfig, c.path, pj)
   })
+
+  console.log('Packages successfully un-linked!');
 }
 
 function modifyJSONDeps(pj: any, propertyName: string, unlinkConfig: UnlinkConfig) {
