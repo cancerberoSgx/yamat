@@ -9,5 +9,5 @@ export declare enum UnlinkVersion {
     npm = "npm",
 }
 export interface UnlinkConfig extends YamatConfig {
-    version: UnlinkVersion;
+    version?: UnlinkVersion;
 }

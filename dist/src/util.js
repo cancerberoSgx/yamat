@@ -17,4 +17,8 @@ function writeFile(file, data) {
     shell.ShellString(data).to(file);
 }
 exports.writeFile = writeFile;
+function getPackageJsonPath(unlinkConfig, packagePath) {
+    return unlinkConfig.rootPath + '/' + packagePath + '/package.json';
+}
+exports.getPackageJsonPath = getPackageJsonPath;
 //# sourceMappingURL=util.js.map

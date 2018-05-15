@@ -1,17 +1,18 @@
-import { getConfig } from "./util";
+import { getConfig, getPackageJsonPath } from "./util";
 import { cat } from "shelljs";
 import { writeFileSync } from "fs";
 import { resolve } from "dns";
 import { YamatConfig } from "./types";
 
 export function unlink(unlinkConfig: UnlinkConfig){
+  unlinkConfig.version = unlinkConfig.version || UnlinkVersion.local
   const config = getConfig(unlinkConfig)
   config.forEach(c => {
-    const pj = JSON.parse(cat(c.path))
+    const pj = JSON.parse(cat(getPackageJsonPath(unlinkConfig, c.path)))
     Object.keys(pj.dependencies||{}).filter(d=>config.find(c=>c.name===d)).forEach(d=>{
       if(unlinkConfig.version===UnlinkVersion.local){
         const targetConfig = config.find(c=>c.name===d)
-        const targetPackageJson = JSON.parse(cat(targetConfig.path+'/package.json'))
+        const targetPackageJson = JSON.parse(cat(getPackageJsonPath(unlinkConfig, targetConfig.path)))
         pj.dependencies[d] = targetPackageJson.version
       }
       else if(unlinkConfig.version===UnlinkVersion.pack){
@@ -24,10 +25,9 @@ export function unlink(unlinkConfig: UnlinkConfig){
         throw new Error('unlink version unknown '+unlinkConfig.version)
       }
     })
-    writeFileSync(c.path, JSON.stringify(pj, null, 2))
+    writeFileSync(getPackageJsonPath(unlinkConfig, c.path), JSON.stringify(pj, null, 2))
   });
 }
-
 
 
 export enum UnlinkVersion {
@@ -40,5 +40,5 @@ export enum UnlinkVersion {
 }
 
 export interface UnlinkConfig extends YamatConfig {
-  version: UnlinkVersion
+  version?: UnlinkVersion
 }

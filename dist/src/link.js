@@ -6,7 +6,7 @@ const path_1 = require("path");
 function link(yamatConfig) {
     const config = util_1.getConfig(yamatConfig);
     config.forEach(c => {
-        const pj = JSON.parse(shelljs_1.cat(c.path));
+        const pj = JSON.parse(shelljs_1.cat(c.path + '/package.json'));
         Object.keys(pj.dependencies || {})
             .filter(d => config.find(c => c.name === d))
             .forEach(d => {

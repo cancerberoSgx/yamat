@@ -6,7 +6,7 @@ import { YamatConfig } from ".";
 export function link(yamatConfig : YamatConfig){
   const config = getConfig(yamatConfig)
   config.forEach(c => {
-    const pj = JSON.parse(cat(c.path))
+    const pj = JSON.parse(cat(c.path+'/package.json'))
     Object.keys(pj.dependencies||{})
     .filter(d=>config.find(c=>c.name===d))
     .forEach(d=>{

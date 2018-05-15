@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const shelljs_1 = require("shelljs");
+const util_1 = require("../src/util");
+const src_1 = require("../src");
 // important this tests need to be executed serially (jasmine random==false)
 describe('use case 1', () => {
     let p;
@@ -21,7 +23,7 @@ echo "console.log('foo say: '+require('foo'))"> index.js && node index.js`);
     });
     it('create other package that depends on var', () => {
         p = shelljs_1.exec(`\\
-    cd project1/bar  && echo "module.exports.msg = 'msg from foo: '+require('foo')"> index.js && node index.js`);
+		cd project1/bar  && echo "module.exports.msg = 'msg from foo: '+require('foo')"> index.js && node index.js`);
         expect(p.code).toBe(0);
         // expect(p.stdout).toContain(`me: different message`)
         expect(shelljs_1.exec(`\\
@@ -32,6 +34,25 @@ echo "console.log('third responds: '+require('bar').msg + ' '+ require('foo'))" 
 cd project1/third && node index.js`);
         expect(p.code).toBe(0);
         expect(p.stdout).toContain(`third responds: msg from foo: different message different message`);
+    });
+    it('yamat unlink', () => {
+        util_1.writeFile('project1/yamat.json', `
+		[
+				{"name": "foo", "path": "./foo"}, 
+				{"name": "bar", "path": "./bar"},
+				{"name": "third", "path": "./third"}
+		]`);
+        expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar");
+        src_1.unlink({ rootPath: 'project1' });
+        expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toBe("1.0.0");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("1.0.0");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("1.0.0");
+        // 		p=exec(`\\
+        // cd project1 && node ../bin/yamat unlink`
+        // 		)
+        // 		expect(p.code).toBe(0)
     });
 });
 //# sourceMappingURL=usecase1Spec.js.map
