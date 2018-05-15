@@ -1,7 +1,5 @@
-import { writeFileSync } from "fs";
-import { cat } from "shelljs";
 import { YamatConfig } from "./types";
-import { getConfig, getPackageJsonPath, parsePackageJson } from "./util";
+import { getConfig, parsePackageJson, writePackageJson } from "./util";
 
 export enum UnlinkVersion {
   /** put te version from local package.json. Default */
@@ -16,17 +14,15 @@ export interface UnlinkConfig extends YamatConfig {
   version?: UnlinkVersion
 }
 
-
 export function unlink(unlinkConfig: UnlinkConfig) {
   unlinkConfig.version = unlinkConfig.version || UnlinkVersion.local
   const config = getConfig(unlinkConfig)
   config.forEach(c => {
-    
     const pj = parsePackageJson(unlinkConfig, c.path)
     modifyJSONDeps(pj, 'dependencies', unlinkConfig)
     modifyJSONDeps(pj, 'devDependencies', unlinkConfig)
-    writeFileSync(getPackageJsonPath(unlinkConfig, c.path), JSON.stringify(pj, null, 2))
-  });
+    writePackageJson(unlinkConfig, c.path, pj)
+  })
 }
 
 function modifyJSONDeps(pj: any, propertyName: string, unlinkConfig: UnlinkConfig) {

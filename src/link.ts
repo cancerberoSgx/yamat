@@ -1,20 +1,22 @@
-import { getConfig, writeFile } from "./util";
+import { getConfig, writeFile, parsePackageJson, writePackageJson } from "./util";
 import { cat } from "shelljs";
 import { relative } from "path";
-import { YamatConfig } from ".";
+import { YamatConfig, ConfigEntry } from "./types";
 
-export function link(yamatConfig : YamatConfig){
+export function link(yamatConfig: YamatConfig) {
   const config = getConfig(yamatConfig)
   config.forEach(c => {
-    const pj = JSON.parse(cat(c.path+'/package.json'))
-    Object.keys(pj.dependencies||{})
-    .filter(d=>config.find(c=>c.name===d))
-    .forEach(d=>{
-      pj.dependencies[d] = relative(c.path, config.find(c=>c.name===d).path)
-    })
-    writeFile(c.path, JSON.stringify(pj, null, 2))
+    const pj = parsePackageJson(yamatConfig,   c.path)//    //JSON.parse(cat(c.path+'/package.json'))
+    modifyJSONDeps(pj, 'dependencies', config, c)
+    modifyJSONDeps(pj, 'devDependencies', config, c)
+    writePackageJson(yamatConfig, c.path, pj)  // writeFile(c.path, JSON.stringify(pj, null, 2))
   });
 }
 
-
-
+function modifyJSONDeps(pj: any, propertyName: string, config: ConfigEntry[], c: ConfigEntry) {
+  Object.keys(pj[propertyName] || {})
+    .filter(d => config.find(c => c.name === d))
+    .forEach(d => {
+      pj[propertyName][d] = 'file:'+relative(c.path, config.find(c => c.name === d).path)
+    })
+}

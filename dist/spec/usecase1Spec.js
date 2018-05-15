@@ -49,6 +49,10 @@ cd project1/third && node index.js`);
         expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toBe("1.0.0");
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("1.0.0");
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("1.0.0");
+        src_1.link({ rootPath: 'project1' });
+        expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar");
         // 		p=exec(`\\
         // cd project1 && node ../bin/yamat unlink`
         // 		)

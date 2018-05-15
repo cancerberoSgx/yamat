@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = require("fs");
 const util_1 = require("./util");
 var UnlinkVersion;
 (function (UnlinkVersion) {
@@ -18,7 +17,7 @@ function unlink(unlinkConfig) {
         const pj = util_1.parsePackageJson(unlinkConfig, c.path);
         modifyJSONDeps(pj, 'dependencies', unlinkConfig);
         modifyJSONDeps(pj, 'devDependencies', unlinkConfig);
-        fs_1.writeFileSync(util_1.getPackageJsonPath(unlinkConfig, c.path), JSON.stringify(pj, null, 2));
+        util_1.writePackageJson(unlinkConfig, c.path, pj);
     });
 }
 exports.unlink = unlink;

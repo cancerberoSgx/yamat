@@ -7,6 +7,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = require("fs");
 const shell = __importStar(require("shelljs"));
 const shelljs_1 = require("shelljs");
 function getConfig(config) {
@@ -25,4 +26,8 @@ function parsePackageJson(unlinkConfig, path) {
     return JSON.parse(shelljs_1.cat(getPackageJsonPath(unlinkConfig, path)));
 }
 exports.parsePackageJson = parsePackageJson;
+function writePackageJson(unlinkConfig, path, data) {
+    fs_1.writeFileSync(getPackageJsonPath(unlinkConfig, path), JSON.stringify(data, null, 2));
+}
+exports.writePackageJson = writePackageJson;
 //# sourceMappingURL=util.js.map
