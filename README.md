@@ -7,11 +7,12 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
  * Don't mess with node_modules
  * Not involved with the development cycle. 
  * Just a simple transformation back and forward in versions of your monorepo's `package.json` dependencies. Will never modify anything else but that 
- * User is responsible on everythin else, publish, versioning, testing
+ * User is responsible on everything else, publish, versioning, testing
+ * User is responsible of correctly ordering dependencies in yamat.json so build doesn't fail
  * KISS. 
  * Don't try to be fast. 
  * Don't try to save space on your disk. 
- * Don't solve any npm problem. Reuses as much as it can of already existent npm functionality. 
+ * Don't try solve any npm problem. Reuses as much as it can of already existent npm functionality. 
  * It's user responsibility to execute `yamat link` when starting development and `yamat unlink` before publishing
  * CLI and node.js API
 
@@ -90,25 +91,40 @@ cat > yamat.json
 ^D 
 ```
 
+**Important** I defined project foo before bar in the array because bar depends on foo. Because commands run with yamat will run in order and serially, I'm responsible of ordering extensions so for example build don't fail. 
+
+
 ## First publish
 
 ```sh
-npx yamat unlink
-cd foo && npm publish && cd ..
-cd bar && npm publish && cd ..
+yamat unlink
+yamat run npm publish
 ```
 
 ## Keep developing and publish again
 
 ```sh
-npx yamat link
+yamat link
 # ready to local development. write test compile install, etc
-# now we want to publish foo
-cd foo && npm version patch && cd ..
-npx yamat unlink
-cd foo && npm publish && cd ..
-npx yamat link
-# and we are ready to work again!
+# now we want to publish all packages again
+
+# make sure tests are green
+yamat run npm test 
+
+# build packages with npm pack and point dependencies to them (so is identical to what will happen when we publish)
+yamat unlink --version pack 
+
+# run tests again
+yamat run "npm install && npm run build && npm run test"
+
+# and if everything is OK increase versions, point dependencies to those new versions and publish
+
+yamat run npm version pack
+yamat unlink 
+yamat run npm publish
+
+# We link packages locally again to keep developing: 
+yamat link
 ```
 
 
