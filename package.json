@@ -1,9 +1,10 @@
 {
   "name": "yamat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "yamat: yet another monorepo administration tool",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
+  "bin": "bin/yamat.js",
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
