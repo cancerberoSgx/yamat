@@ -7,3 +7,4 @@ tests
 *.log
 tmp
 project1
+*.tgz
