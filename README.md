@@ -1,14 +1,17 @@
 # yamat: yet another mono-repo administration tool
 
-Tired of the complexities of lerna, rush or yarn workspaces ? 
+Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves the problem of mono repos (multiple packages in the same repository) with a very straightforward solution. 
 
-This tool solves the problem of mono repos (multiple packages in the same repository) with a very straightforward solution. 
-
-No links, no magic, not involved with the development cycle. All the rest is your responsibility, publish, versioning, no run on all, no tests, no parallel thing, no hacks
-
-KISS. No magic. Slow. Don't try to save space on your disk. Don't solve any npm problem - npm standard. Just a simple transformation to your package.json
-
-It's user responsibility to execute yamat link or unlink after install before publish. 
+ * npm based
+ * don't create links just execute npm commands
+ * Not involved with the development cycle. 
+ * Just a simple transformation back and forward in version of your package's dependencies
+ * User is responsible on everythin else, publish, versioning, testing
+ * KISS. 
+ * Don't try to be fast. 
+ * Don't try to save space on your disk. 
+ * Don't solve any npm problem. Reuses most of already npm functionality it can. 
+ * It's user responsibility to execute `yamat link` when starting development and `yamat unlink` before publishing
 
 # Tutorial
 

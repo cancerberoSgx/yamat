@@ -1,5 +1,4 @@
 import { YamatConfig } from "./types";
-export declare function unlink(unlinkConfig: UnlinkConfig): void;
 export declare enum UnlinkVersion {
     /** put te version from local package.json. Default */
     local = "local",
@@ -11,3 +10,4 @@ export declare enum UnlinkVersion {
 export interface UnlinkConfig extends YamatConfig {
     version?: UnlinkVersion;
 }
+export declare function unlink(unlinkConfig: UnlinkConfig): void;
