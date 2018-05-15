@@ -26,8 +26,9 @@ function modifyJSONDeps(pj, propertyName, unlinkConfig) {
     Object.keys(pj[propertyName] || {}).filter(d => config.find(c => c.name === d)).forEach(d => {
         if (unlinkConfig.version === UnlinkVersion.local) {
             const targetConfig = config.find(c => c.name === d);
-            const targetPackageJson = util_1.parsePackageJson(unlinkConfig, targetConfig.path);
-            pj[propertyName][d] = targetPackageJson.version;
+            if (targetConfig) {
+                pj[propertyName][d] = util_1.parsePackageJson(unlinkConfig, targetConfig.path).version;
+            }
         }
         else if (unlinkConfig.version === UnlinkVersion.pack) {
             throw new Error('Not implemented yet');

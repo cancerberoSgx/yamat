@@ -16,7 +16,10 @@ function modifyJSONDeps(pj, propertyName, config, c) {
     Object.keys(pj[propertyName] || {})
         .filter(d => config.find(c => c.name === d))
         .forEach(d => {
-        pj[propertyName][d] = 'file:' + path_1.relative(c.path, config.find(c => c.name === d).path);
+        const found = config.find(c => c.name === d);
+        if (found) {
+            pj[propertyName][d] = 'file:' + path_1.relative(c.path, found.path);
+        }
     });
 }
 //# sourceMappingURL=link.js.map

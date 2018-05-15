@@ -8,6 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
+const path_1 = require("path");
 const shell = __importStar(require("shelljs"));
 const shelljs_1 = require("shelljs");
 function getConfig(config) {
@@ -19,7 +20,7 @@ function writeFile(file, data) {
 }
 exports.writeFile = writeFile;
 function getPackageJsonPath(unlinkConfig, packagePath) {
-    return unlinkConfig.rootPath + '/' + packagePath + '/package.json';
+    return unlinkConfig.rootPath + path_1.sep + packagePath + path_1.sep + 'package.json';
 }
 exports.getPackageJsonPath = getPackageJsonPath;
 function parsePackageJson(unlinkConfig, path) {

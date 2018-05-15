@@ -3,15 +3,62 @@
 Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves the problem of mono repos (multiple packages in the same repository) with a very straightforward solution. 
 
  * npm based
- * don't create links just execute npm commands
+ * Don't create links just execute npm commands
+ * Don't mess with node_modules
  * Not involved with the development cycle. 
- * Just a simple transformation back and forward in version of your package's dependencies
+ * Just a simple transformation back and forward in versions of your monorepo's `package.json` dependencies. Will never modify anything else but that 
  * User is responsible on everythin else, publish, versioning, testing
  * KISS. 
  * Don't try to be fast. 
  * Don't try to save space on your disk. 
- * Don't solve any npm problem. Reuses most of already npm functionality it can. 
+ * Don't solve any npm problem. Reuses as much as it can of already existent npm functionality. 
  * It's user responsibility to execute `yamat link` when starting development and `yamat unlink` before publishing
+ * CLI and node.js API
+
+
+# Commands
+
+## yamat unlink
+
+ * **Execute before publishing**. 
+ * **Will point to numbered dependencies**. Three modalities:
+ * `yamat unlink --version local` : will point to the current version number of the local `package.json`. Ideal **for publish all the packages together**.
+ * `yamat unlink --version pack` : for each managed dependency will generate a package tarball and point all dependents there. A package tarball (.tgz file) is generated with `npm pack` command and is identical to the result of `npm publish`. Ideal for **testing packages before publishing**
+ * `yamat unlink --version npm` : will point each dependencies to managed packages to npm latest version. (using `npm show $PACKAGE version`). Ideal to test your packages against current production versions of dependencies. 
+
+
+## yamat link
+ 
+ * **Execute before start developing** in mono-repo - mode. Will change dependencies pointing to local folders ("some-package": "file:../some-package"). "Mono-repo development mode". 
+  For each managed dependency it will point it to a relative filesystem path. Then executes `npm install` (which creates sym links)
+
+## yamat run
+
+ * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yarmat will also. 
+
+
+# Common Publishing workflow
+
+Imagine you made lots of changes, your tests are green and you feel it's time to increment versions and publish to npm. You want to test against packages identical to the ones that are published. If tests pass, increment version and publish:
+
+```sh
+yarma run npm test 
+# tests are passing with dependencies linked in filesystem
+# so now we want to run tests using "npm pack" version of dependencies
+# that should be identical to next version of "npm publish"
+yarma unlink --version pack
+yarma run npm run clean 
+yarma run npm run build
+yarma run npm run test
+# OK tests passed using "npm pack" version of dependencies
+# let's increment version, point to that new version and publish
+yarma run npm version
+yarma unlink --version local # points to version in local package.json
+yarma run npm publish
+```
+
+ 
+
 
 # Tutorial
 
@@ -65,20 +112,11 @@ npx yamat link
 ```
 
 
-# how it works
 
-## link will:
- 
- * for each dependency found in your internal package's package.json that points to an internal package it will change it to point to the local folder. Then executes `npm install` (that will create links to local packages out of the box )
+TODO
 
-## unlink will: 
- 
- * for each dependency found in your internal package's package.json that points to an internal package it will execute npm install --save $localPackage@VERSION where @VERSION is the version local version of the package. 
-
-
-# Things for the future:
-
+* yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.
+* yamat unlink --version pack --target foo,bar // be able to only modify certain packages, not everyone 
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
 * yamat unlink --version=pack to point to npm pack generated file so we are sure the publish will go fine. 
-* yamat run X for run X on every package
-* yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.
+* possible issue : yarma run npm run build: what about dependencies - we should build the roots first and then dependants... 

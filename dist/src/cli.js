@@ -3,18 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const shelljs_1 = require("shelljs");
 const link_1 = require("./link");
 const unlink_1 = require("./unlink");
+const run_1 = require("./run");
 const args = require('yargs-parser')(process.argv.slice(2));
-const shell = require('shelljs');
 function main() {
     const config = {
         rootPath: args.rootPath || shelljs_1.pwd(),
-        yamatJsonFile: args.yamatJsonFile || 'yamat.json',
-        version: args.version || unlink_1.UnlinkVersion.local
+        yamatJsonFile: args.yamatJsonFile || 'yamat.json'
     };
-    if (args._.includes('unlink')) {
-        return unlink_1.unlink(config);
+    const firstArg = args._[0];
+    if (firstArg === 'unlink') {
+        return unlink_1.unlink(Object.assign({}, config, { version: args.version || unlink_1.UnlinkVersion.local }));
     }
-    else if (args._.includes('link')) {
+    else if (firstArg === 'run') {
+        const cmd = [].concat(args._).slice(1).join(' ');
+        return run_1.run(Object.assign({}, config, { cmd }));
+    }
+    else if (firstArg === 'link') {
         return link_1.link(config);
     }
     else

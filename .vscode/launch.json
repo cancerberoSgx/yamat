@@ -11,7 +11,8 @@
             "protocol": "inspector",
             "name": "unlink project1",
             "args": [
-                "unlink", "--root-path", "project1"
+                // "unlink", "--root-path", "project1"
+                "run", "--root-path", "project1", "npm", "test"
             ],
             
             "runtimeArgs": [

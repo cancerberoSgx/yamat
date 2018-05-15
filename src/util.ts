@@ -1,4 +1,5 @@
 import { writeFileSync } from 'fs';
+import { sep } from 'path';
 import * as shell from 'shelljs';
 import { cat } from "shelljs";
 import { ConfigEntry, UnlinkConfig } from ".";
@@ -13,7 +14,7 @@ export function writeFile(file: string, data: string) {
 }
 
 export function getPackageJsonPath(unlinkConfig: UnlinkConfig, packagePath: string) {
-  return unlinkConfig.rootPath + '/' + packagePath + '/package.json'
+  return unlinkConfig.rootPath + sep + packagePath + sep + 'package.json'
 }
 
 
