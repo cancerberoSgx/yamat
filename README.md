@@ -1,4 +1,4 @@
-# yamat: yet another mono-repo administration tool
+# yamat: Yet Another Monorepo Administration Tool
 
 Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves the problem of mono repos (multiple packages in the same repository) with a very straightforward solution. 
 
@@ -34,7 +34,7 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 
 ## yamat run
 
- * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yarmat will also. 
+ * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. 
 
 
 # Common Publishing workflow
@@ -42,19 +42,19 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 Imagine you made lots of changes, your tests are green and you feel it's time to increment versions and publish to npm. You want to test against packages identical to the ones that are published. If tests pass, increment version and publish:
 
 ```sh
-yarma run npm test 
+yamat run npm test 
 # tests are passing with dependencies linked in filesystem
 # so now we want to run tests using "npm pack" version of dependencies
 # that should be identical to next version of "npm publish"
-yarma unlink --version pack
-yarma run npm run clean 
-yarma run npm run build
-yarma run npm run test
+yamat unlink --version pack
+yamat run npm run clean 
+yamat run npm run build
+yamat run npm run test
 # OK tests passed using "npm pack" version of dependencies
 # let's increment version, point to that new version and publish
-yarma run npm version
-yarma unlink --version local # points to version in local package.json
-yarma run npm publish
+yamat run npm version
+yamat unlink --version local # points to version in local package.json
+yamat run npm publish
 ```
 
  
@@ -119,4 +119,4 @@ TODO
 * yamat unlink --version pack --target foo,bar // be able to only modify certain packages, not everyone 
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
 * yamat unlink --version=pack to point to npm pack generated file so we are sure the publish will go fine. 
-* possible issue : yarma run npm run build: what about dependencies - we should build the roots first and then dependants... 
+* possible issue : yamat run npm run build: what about dependencies - we should build the roots first and then dependants... 
