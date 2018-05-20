@@ -131,6 +131,7 @@ yamat link
 
 TODO
 
+* execute configs in order of dependencies - shouldn't be reposibility of the user
 * yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.
 * yamat unlink --version pack --target foo,bar // be able to only modify certain packages, not everyone 
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
