@@ -9,7 +9,7 @@ const args = require('yargs-parser')(process.argv.slice(2));
 
 export function main() {
   const config: YamatConfig = {
-    rootPath: args.rootPath || pwd(),
+    rootPath: args.rootPath || pwd().toString(),
     yamatJsonFile: args.yamatJsonFile || 'yamat.json'
   }
   const firstArg = args._[0]

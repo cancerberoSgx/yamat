@@ -53,7 +53,7 @@ yamat run npm run build
 yamat run npm run test
 # OK tests passed using "npm pack" version of dependencies
 # let's increment version, point to that new version and publish
-yamat run npm version
+yamat run npm version patch
 yamat unlink --version local # points to version in local package.json
 yamat run npm publish
 ```
@@ -119,7 +119,7 @@ yamat run "npm install && npm run build && npm run test"
 
 # and if everything is OK increase versions, point dependencies to those new versions and publish
 
-yamat run npm version pack
+yamat run npm version patch
 yamat unlink 
 yamat run npm publish
 

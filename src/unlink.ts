@@ -17,7 +17,7 @@ export interface UnlinkConfig extends YamatConfig {
 }
 
 export function unlink(unlinkConfig: UnlinkConfig) {
-  unlinkConfig.rootPath = unlinkConfig.rootPath || '.'
+  unlinkConfig.rootPath = unlinkConfig.rootPath || '.'  
   unlinkConfig.rootPath = resolve(unlinkConfig.rootPath)
   unlinkConfig.version = unlinkConfig.version || UnlinkVersion.local
   const config = getConfig(unlinkConfig)

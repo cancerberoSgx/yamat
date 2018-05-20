@@ -7,7 +7,7 @@ const run_1 = require("./run");
 const args = require('yargs-parser')(process.argv.slice(2));
 function main() {
     const config = {
-        rootPath: args.rootPath || shelljs_1.pwd(),
+        rootPath: args.rootPath || shelljs_1.pwd().toString(),
         yamatJsonFile: args.yamatJsonFile || 'yamat.json'
     };
     const firstArg = args._[0];

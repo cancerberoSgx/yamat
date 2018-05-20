@@ -15,12 +15,15 @@ function run(runConfig) {
         shelljs_1.cd(runConfig.rootPath + path_1.sep + c.path);
         const code = shelljs_1.exec(runConfig.cmd).code;
         if (code !== 0) {
-            console.log('ERROR in config ' + c.path + ' while executing command ' + runConfig.cmd);
+            console.log(`ERROR while trying to execute command "${runConfig.cmd}" in ${c.path}`);
             process.exit(code);
+        }
+        else {
+            console.log(`Command "${runConfig.cmd}" finish successfully in ${c.path}`);
         }
         shelljs_1.cd(originalDir);
     });
-    console.log(`yamat run successfully run command "${runConfig.cmd}" in all packages without errors`);
+    console.log(`yamat successfully run command "${runConfig.cmd}" in all packages without errors`);
 }
 exports.run = run;
 //# sourceMappingURL=run.js.map

@@ -15,13 +15,14 @@ export function run(runConfig: RunConfig) {
     cd(runConfig.rootPath+sep+c.path)
     const code = exec(runConfig.cmd).code
     if (code !== 0) {
-      console.log('ERROR in config ' + c.path + ' while executing command ' + runConfig.cmd)
+      console.log(`ERROR while trying to execute command "${runConfig.cmd}" in ${c.path}`)
       process.exit(code)
+    } else {
+      console.log(`Command "${runConfig.cmd}" finish successfully in ${c.path}`)
     }
     cd(originalDir)
   })
-  console.log(`yamat run successfully run command "${runConfig.cmd}" in all packages without errors`);
-  
+  console.log(`Command "${runConfig.cmd}" successfully run in all packages without errors`);
 }
 
 export interface RunConfig extends YamatConfig {
