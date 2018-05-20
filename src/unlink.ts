@@ -1,7 +1,7 @@
 import { YamatConfig } from "./types";
 import { getConfig, parsePackageJson, writePackageJson, getPackagePath } from "./util";
 import { pack } from "./pack";
-import { resolve, relative } from "path";
+import { resolve, relative, join } from "path";
 
 export enum UnlinkVersion {
   /** put te version from local package.json. Default */
@@ -45,7 +45,9 @@ function modifyJSONDeps(pj: any, propertyName: string, unlinkConfig: UnlinkConfi
       const targetConfig = config.find(c => c.name === d)
       if(targetConfig){
         const targetTgz = resolve(pack(unlinkConfig, targetConfig))
-        pj[propertyName][d] = relative(resolve(getPackagePath(unlinkConfig, targetConfig.path)), targetTgz) 
+        // we want absolute urls so dependencies of dependencies inside .tgz work! relative won't work in that
+        // case
+        pj[propertyName][d] = targetTgz//join(getPackagePath(unlinkConfig, targetConfig.path), targetTgz)//relative(resolve(getPackagePath(unlinkConfig, targetConfig.path)), targetTgz) 
       }
     }
     else if (unlinkConfig.version === UnlinkVersion.npm) {

@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs';
-import { sep, join } from 'path';
+import { sep, join, resolve } from 'path';
 import * as shell from 'shelljs';
 import { cat } from "shelljs";
 import { ConfigEntry, UnlinkConfig } from ".";
@@ -35,5 +35,5 @@ export function getInternalFolder(config: YamatConfig) {
   if (!shell.test('-d', folderPath)) {
     shell.mkdir('-p', folderPath)
   }
-  return folderPath
+  return resolve(folderPath)
 }

@@ -41,7 +41,7 @@ function getInternalFolder(config) {
     if (!shell.test('-d', folderPath)) {
         shell.mkdir('-p', folderPath);
     }
-    return folderPath;
+    return path_1.resolve(folderPath);
 }
 exports.getInternalFolder = getInternalFolder;
 //# sourceMappingURL=util.js.map

@@ -41,7 +41,9 @@ function modifyJSONDeps(pj, propertyName, unlinkConfig) {
             const targetConfig = config.find(c => c.name === d);
             if (targetConfig) {
                 const targetTgz = path_1.resolve(pack_1.pack(unlinkConfig, targetConfig));
-                pj[propertyName][d] = path_1.relative(path_1.resolve(util_1.getPackagePath(unlinkConfig, targetConfig.path)), targetTgz);
+                // we want absolute urls so dependencies of dependencies inside .tgz work! relative won't work in that
+                // case
+                pj[propertyName][d] = targetTgz; //join(getPackagePath(unlinkConfig, targetConfig.path), targetTgz)//relative(resolve(getPackagePath(unlinkConfig, targetConfig.path)), targetTgz) 
             }
         }
         else if (unlinkConfig.version === UnlinkVersion.npm) {

@@ -1,4 +1,4 @@
-import {rm, exec, ExecOutputReturnValue, cat} from 'shelljs'
+import {rm, exec, ExecOutputReturnValue, cat, test} from 'shelljs'
 import { writeFile } from '../src/util';
 import { unlink, link, UnlinkVersion } from '../src';
 
@@ -75,9 +75,12 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 
 	it('yamat unlink --version pack', ()=>{
 		unlink({rootPath: 'project1', version: UnlinkVersion.pack})
-		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("../.yamat/foo-1.0.0.tgz")
-		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("../.yamat/foo-1.0.0.tgz")
-		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("../.yamat/bar-1.0.0.tgz")
+		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz")
+		expect(test('-f', JSON.parse(cat('project1/bar/package.json')).dependencies.foo)).toBe(true)
+		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz")
+		expect(test('-f', JSON.parse(cat('project1/third/package.json')).dependencies.foo)).toBe(true)
+		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toContain("project1/.yamat/bar-1.0.0.tgz")
+		expect(test('-f', JSON.parse(cat('project1/third/package.json')).dependencies.bar)).toBe(true)
 	})
 
 

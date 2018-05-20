@@ -23,7 +23,7 @@ function run(runConfig) {
         }
         shelljs_1.cd(originalDir);
     });
-    console.log(`yamat successfully run command "${runConfig.cmd}" in all packages without errors`);
+    console.log(`Command "${runConfig.cmd}" successfully run in all packages without errors`);
 }
 exports.run = run;
 //# sourceMappingURL=run.js.map
