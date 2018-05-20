@@ -134,6 +134,8 @@ TODO
 * yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.
 * yamat unlink --version pack --target foo,bar // be able to only modify certain packages, not everyone 
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
+* yamat unlink --version global to point to the version installed globally - 
 * yamat unlink --version=pack to point to npm pack generated file so we are sure the publish will go fine. 
 * possible issue : yamat run npm run build: what about dependencies - we should build the roots first and then dependants... 
 * license
+* yamat.json - path nor required - if none use name as value

@@ -3,12 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("./util");
 const path_1 = require("path");
 function link(yamatConfig) {
+    yamatConfig.rootPath = yamatConfig.rootPath || '.';
+    yamatConfig.rootPath = path_1.resolve(yamatConfig.rootPath);
     const config = util_1.getConfig(yamatConfig);
     config.forEach(c => {
-        const pj = util_1.parsePackageJson(yamatConfig, c.path); //    //JSON.parse(cat(c.path+'/package.json'))
+        const pj = util_1.parsePackageJson(yamatConfig, c.path);
         modifyJSONDeps(pj, 'dependencies', config, c);
         modifyJSONDeps(pj, 'devDependencies', config, c);
-        util_1.writePackageJson(yamatConfig, c.path, pj); // writeFile(c.path, JSON.stringify(pj, null, 2))
+        util_1.writePackageJson(yamatConfig, c.path, pj);
     });
     console.log('Packages successfully linked!');
 }

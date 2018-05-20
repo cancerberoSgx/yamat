@@ -1,6 +1,6 @@
 import {rm, exec, ExecOutputReturnValue, cat} from 'shelljs'
 import { writeFile } from '../src/util';
-import { unlink, link } from '../src';
+import { unlink, link, UnlinkVersion } from '../src';
 
 // important this tests need to be executed serially (jasmine random==false)
 describe('use case 1', () => {
@@ -65,10 +65,21 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar")
+
 // 		p=exec(`\\
 // cd project1 && node ../bin/yamat unlink`
 // 		)
 // 		expect(p.code).toBe(0)
 
 	})
+
+	it('yamat unlink --version pack', ()=>{
+		unlink({rootPath: 'project1', version: UnlinkVersion.pack})
+		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("../.yamat/foo-1.0.0.tgz")
+		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("../.yamat/foo-1.0.0.tgz")
+		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("../.yamat/bar-1.0.0.tgz")
+	})
+
+
+
 })

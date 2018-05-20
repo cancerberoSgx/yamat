@@ -20,9 +20,13 @@ function writeFile(file, data) {
 }
 exports.writeFile = writeFile;
 function getPackageJsonPath(unlinkConfig, packagePath) {
-    return unlinkConfig.rootPath + path_1.sep + packagePath + path_1.sep + 'package.json';
+    return getPackagePath(unlinkConfig, packagePath) + path_1.sep + 'package.json';
 }
 exports.getPackageJsonPath = getPackageJsonPath;
+function getPackagePath(unlinkConfig, packagePath) {
+    return unlinkConfig.rootPath + path_1.sep + packagePath;
+}
+exports.getPackagePath = getPackagePath;
 function parsePackageJson(unlinkConfig, path) {
     return JSON.parse(shelljs_1.cat(getPackageJsonPath(unlinkConfig, path)));
 }
@@ -31,4 +35,13 @@ function writePackageJson(unlinkConfig, path, data) {
     fs_1.writeFileSync(getPackageJsonPath(unlinkConfig, path), JSON.stringify(data, null, 2));
 }
 exports.writePackageJson = writePackageJson;
+const internalFolder = '.yamat';
+function getInternalFolder(config) {
+    const folderPath = path_1.join(config.rootPath || '.', internalFolder);
+    if (!shell.test('-d', folderPath)) {
+        shell.mkdir('-p', folderPath);
+    }
+    return folderPath;
+}
+exports.getInternalFolder = getInternalFolder;
 //# sourceMappingURL=util.js.map

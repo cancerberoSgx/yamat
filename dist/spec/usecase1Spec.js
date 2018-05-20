@@ -58,5 +58,11 @@ cd project1/third && node index.js`);
         // 		)
         // 		expect(p.code).toBe(0)
     });
+    it('yamat unlink --version pack', () => {
+        src_1.unlink({ rootPath: 'project1', version: src_1.UnlinkVersion.pack });
+        expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toBe("../.yamat/foo-1.0.0.tgz");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("../.yamat/foo-1.0.0.tgz");
+        expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("../.yamat/bar-1.0.0.tgz");
+    });
 });
 //# sourceMappingURL=usecase1Spec.js.map
