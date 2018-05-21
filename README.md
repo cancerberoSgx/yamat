@@ -4,6 +4,7 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 
  * npm based
  * Don't create links just execute npm commands
+ * dumb tool - dependency order in configuration file is user's responsibility (will be improved)
  * Don't mess with node_modules
  * Not involved with the development cycle. 
  * Just a simple transformation back and forward in versions of your monorepo's `package.json` dependencies. Will never modify anything else but that 
@@ -91,7 +92,7 @@ cat > yamat.json
 ^D 
 ```
 
-**Important** I defined project foo before bar in the array because bar depends on foo. Because commands run with yamat will run in order and serially, I'm responsible of ordering extensions so for example build don't fail. 
+**Important** I defined project foo before bar in the array because bar depends on foo. Because commands run with yamat will run in order and serially, **I'm responsible of ordering packages in yamat.json** so, for example, build don't fail. 
 
 
 ## First publish
