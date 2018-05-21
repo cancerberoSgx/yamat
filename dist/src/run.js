@@ -11,7 +11,7 @@ function run(runConfig) {
     console.log(`Running in all packages command : ${JSON.stringify(runConfig)}`);
     const originalDir = shelljs_1.pwd();
     const config = util_1.getConfig(runConfig);
-    const errors = [];
+    const results = [];
     config.forEach(c => {
         shelljs_1.cd(runConfig.rootPath + path_1.sep + c.path);
         const code = shelljs_1.exec(runConfig.cmd).code;
@@ -22,13 +22,13 @@ function run(runConfig) {
             }
         }
         else {
-            errors.push({ cmd: runConfig.cmd, path: c.path, code });
             console.log(`Command "${runConfig.cmd}" finish successfully in ${c.path}`);
         }
+        results.push({ cmd: runConfig.cmd, path: c.path, code });
         shelljs_1.cd(originalDir);
     });
-    if (errors.length) {
-        console.error(`\nERRORs when executing the following commands on some parsePackageJson. List: \n${JSON.stringify(errors, null, 2)}`);
+    if (results.length) {
+        console.error(`\nERRORs when executing the following commands on some packages: \n${JSON.stringify(results.map(r => r.code !== 0), null, 2)}`);
     }
     else {
         console.log(`Command "${runConfig.cmd}" successfully run in all packages without errors`);

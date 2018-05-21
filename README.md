@@ -144,3 +144,4 @@ TODO
 * yamat.json - path nor required - if none use name as value
 * npm run test-js
 * yamat run spec
+* should yamat link set dependencies  with ^ ?
