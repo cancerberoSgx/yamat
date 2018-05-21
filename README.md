@@ -50,17 +50,18 @@ yamat run npm test
 # that should be identical to next version of "npm publish"
 yamat unlink --version pack
 yamat run npm run clean 
+yamat run npm install
 yamat run npm run build
-yamat run npm run test
+yamat run npm test
 # OK tests passed using "npm pack" version of dependencies
 # let's increment version, point to that new version and publish
-yamat run npm version patch
-yamat unlink --version local # points to version in local package.json
+yamat unlink # point dependencies to version declared in local package.json
+yamat run npm version patch # increments version by 0.0.1 of package
+yamat unlink # update dependencies version (incremented with previous command)
 yamat run npm publish
 ```
 
- 
-
+If unsure, you could run `yamat unlink --version pack && yamat run npm run clean && yamat run npm install && yamat run npm run build && yamat run npm test && yamat unlink` commands again before the last `npm publish` but IMO not necessary because we already test everything against packed dependencies... Just make sure you run `yamat unlink` before publishing
 
 # Tutorial
 
