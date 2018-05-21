@@ -1,7 +1,10 @@
 node_modules
-package-deps.json
 *.log
 doc-assets
 tmp
 spec
+src
+dist/spec
 project1
+tsconfig.json
+dist/src/*.map
