@@ -18,7 +18,7 @@ export function main() {
   }
   else if (firstArg === 'run') {
     const cmd = [].concat(args._).slice(1).join(' ')
-    return run({...config, cmd})
+    return run({...config, cmd, breakOnError: !!args.breakOnError || true})
   }
   else if (firstArg === 'link') {
     return link(config)

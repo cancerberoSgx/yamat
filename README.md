@@ -36,7 +36,7 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 
 ## yamat run
 
- * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. 
+ * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. For executing the command in all packages no matter if there are errors and then present a full report, execute it with `--break-on-error yes` for example, `yamat --break-on-error yes run npm test` 
 
 
 # Common Publishing workflow

@@ -6,4 +6,5 @@ import { YamatConfig } from ".";
 export declare function run(runConfig: RunConfig): void;
 export interface RunConfig extends YamatConfig {
     cmd: string;
+    breakOnError: boolean;
 }
