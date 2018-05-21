@@ -16,7 +16,7 @@ function main() {
     }
     else if (firstArg === 'run') {
         const cmd = [].concat(args._).slice(1).join(' ');
-        return run_1.run(Object.assign({}, config, { cmd, breakOnError: !!args.breakOnError || true }));
+        return run_1.run(Object.assign({}, config, { cmd, breakOnError: args.breakOnError !== 'no' }));
     }
     else if (firstArg === 'link') {
         return link_1.link(config);

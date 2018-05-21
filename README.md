@@ -36,7 +36,7 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 
 ## yamat run
 
- * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. For executing the command in all packages no matter if there are errors and then present a full report, execute it with `--break-on-error yes` for example, `yamat --break-on-error yes run npm test` 
+ * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. For executing the command in all packages no matter if there are errors and then present a full report, execute it with `--break-on-error yes` for example, `yamat --break-on-error no run npm test` 
 
 
 # Common Publishing workflow
@@ -133,7 +133,7 @@ yamat link
 
 TODO
 
-* execute configs in order of dependencies - shouldn't be reposibility of the user
+* execute configs in order of dependencies - shouldn't be responsibility of the user
 * yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.
 * yamat unlink --version pack --target foo,bar // be able to only modify certain packages, not everyone 
 * Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
@@ -142,3 +142,5 @@ TODO
 * possible issue : yamat run npm run build: what about dependencies - we should build the roots first and then dependants... 
 * license
 * yamat.json - path nor required - if none use name as value
+* npm run test-js
+* yamat run spec

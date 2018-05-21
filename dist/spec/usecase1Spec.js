@@ -53,10 +53,6 @@ cd project1/third && node index.js`);
         expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo");
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo");
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar");
-        // 		p=exec(`\\
-        // cd project1 && node ../bin/yamat unlink`
-        // 		)
-        // 		expect(p.code).toBe(0)
     });
     it('yamat unlink --version pack', () => {
         src_1.unlink({ rootPath: 'project1', version: src_1.UnlinkVersion.pack });

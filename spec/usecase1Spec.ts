@@ -66,10 +66,6 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar")
 
-// 		p=exec(`\\
-// cd project1 && node ../bin/yamat unlink`
-// 		)
-// 		expect(p.code).toBe(0)
 
 	})
 
