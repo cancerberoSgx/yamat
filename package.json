@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
-    "@types/node": "^8.0.24",
-    "@types/shelljs": "^0.7.9",
+    "@types/node": "^10.3.0",
+    "@types/shelljs": "^0.8.0",
     "jasmine": "^3.1.0",
     "ts-node": "^6.0.3",
-    "typescript": "^2.8.3"
+    "typescript": "^2.9.1"
   },
   "repository": "https://github.com/cancerberoSgx/yamat",
   "keywords": [
@@ -33,9 +33,12 @@
     "lerna alternative",
     "lerna",
     "rush",
+    "rush alternative",
     "yarn",
     "workspace",
     "npm workspace",
-    "yarn workspace"
+    "yarn workspace",
+    "yarn workspaces",
+    "yarn workspaces alternative"
   ]
 }

@@ -6,4 +6,5 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./unlink"));
 __export(require("./link"));
+__export(require("./run"));
 //# sourceMappingURL=index.js.map

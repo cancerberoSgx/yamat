@@ -5,7 +5,7 @@ export declare enum UnlinkVersion {
     /** build current package with npm pack and point the version to that .tgz */
     pack = "pack",
     /** put the version of latest version of package in npm  */
-    npm = "npm",
+    npm = "npm"
 }
 export interface UnlinkConfig extends YamatConfig {
     version?: UnlinkVersion;
