@@ -1,6 +1,6 @@
 {
   "name": "yamat",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "yamat: yet another monorepo administration tool",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -10,7 +10,8 @@
     "build": "tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine",
     "clean": "rm -rf node_modules/ package-lock.json",
-    "all": "npm run clean && npm install && npm run build && npm test"
+    "all": "npm run clean && npm install && npm run build && npm test",
+    "prepare": "npm run build"
   },
   "author": "Sebastian Gurin",
   "license": "MIT",

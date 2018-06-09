@@ -35,7 +35,7 @@ cd project1/third && node index.js`);
         expect(p.code).toBe(0);
         expect(p.stdout).toContain(`third responds: msg from foo: different message different message`);
     });
-    it('yamat unlink', () => {
+    it('unlink', () => {
         util_1.writeFile('project1/yamat.json', `
 		[
 				{"name": "foo", "path": "./foo"}, 
@@ -54,7 +54,7 @@ cd project1/third && node index.js`);
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo");
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar");
     });
-    it('yamat unlink --version pack', () => {
+    it('unlink --version pack', () => {
         src_1.unlink({ rootPath: 'project1', version: src_1.UnlinkVersion.pack });
         expect(JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz");
         expect(shelljs_1.test('-f', JSON.parse(shelljs_1.cat('project1/bar/package.json')).dependencies.foo)).toBe(true);
@@ -63,5 +63,23 @@ cd project1/third && node index.js`);
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toContain("project1/.yamat/bar-1.0.0.tgz");
         expect(shelljs_1.test('-f', JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar)).toBe(true);
     });
+    xit('link', () => {
+    });
+    it('run', () => {
+        src_1.run({ rootPath: 'project1', cmd: 'echo "hello" && exit 0', breakOnError: true });
+        //TODO: test  --breakOnError=true
+    });
+    // following are CLI test - TODO: put this in other file - we dont have time now - taking advantage of exiting test projects
+    it('CLI yamat run', () => {
+        const p = shelljs_1.exec(`\\
+cd project1
+npm i --save-dev ..
+npx yamat run  'echo "hello123" && exit 0' 
+		`);
+        expect(p.code).toBe(0);
+        expect(p.stdout).toContain('hello123');
+        //TODO: test --breakOnError=true
+    });
+    //TODO: CLI - test other commands
 });
 //# sourceMappingURL=usecase1Spec.js.map

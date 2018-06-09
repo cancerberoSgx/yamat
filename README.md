@@ -25,10 +25,9 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 ## yamat unlink
 
  * **Execute before publishing**. 
- * **Will point to numbered dependencies**. Three modalities:
- * `yamat unlink --version local` : will point to the current version number of the local `package.json`. Ideal **for publish all the packages together**.
- * `yamat unlink --version pack` : for each managed dependency will generate a package tarball and point all dependents there. A package tarball (.tgz file) is generated with `npm pack` command and is identical to the result of `npm publish`. Ideal for **testing packages before publishing**
- * `yamat unlink --version npm` : will point each dependencies to managed packages to npm latest version. (using `npm show $PACKAGE version`). Ideal to test your packages against current production versions of dependencies. 
+ * **Will point to numbered dependencies**. 
+ * `yamat unlink` : will point to the current version number of the local `package.json`. **Ideal for publish all the packages together**.
+ * `yamat unlink --version pack` : for each managed dependency will generate a package tarball and point all dependents there. A package tarball (.tgz file) is generated with `npm pack` command and is identical to the result of `npm publish`. **Ideal for testing packages before publishing**
 
 
 ## yamat link
@@ -41,7 +40,9 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
  * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. For executing the command in all packages no matter if there are errors and then present a full report, execute it with `--break-on-error yes` for example, `yamat --break-on-error no run npm test` 
 
 
-# Common Publishing workflow
+# Common Publishing workflow 
+
+(for impatiens)
 
 Imagine you made lots of changes, your tests are green and you feel it's time to increment versions and publish to npm. You want to test against packages identical to the ones that are published. If tests pass, increment version and publish:
 
@@ -62,8 +63,9 @@ yamat run npm version patch # increments version by 0.0.1 of package
 yamat unlink # update dependencies version (incremented with previous command)
 yamat run npm publish
 ```
+If unsure, you could run `yamat unlink --version pack && yamat run npm run clean && yamat run npm install && yamat run npm run build && yamat run npm test && yamat unlink` commands again before the last `npm publish` but IMO not necessary because we already test everything against packed dependencies... Just make sure you run `yamat unlink` before publishing. 
 
-If unsure, you could run `yamat unlink --version pack && yamat run npm run clean && yamat run npm install && yamat run npm run build && yamat run npm test && yamat unlink` commands again before the last `npm publish` but IMO not necessary because we already test everything against packed dependencies... Just make sure you run `yamat unlink` before publishing
+See more detailed examples below. 
 
 # Tutorial
 
@@ -115,7 +117,8 @@ yamat link
 # make sure tests are green
 yamat run npm test 
 
-# build packages with npm pack and point dependencies to them (so is identical to what will happen when we publish)
+# build packages with npm pack and point dependencies to them (so is identical to 
+# what will happen when we publish)
 yamat unlink --version pack 
 
 # run tests again
@@ -123,11 +126,17 @@ yamat run "npm install && npm run build && npm run test"
 
 # and if everything is OK increase versions, point dependencies to those new versions and publish
 
+# increment version of each package
 yamat run npm version patch
+
+# point dependencies to version declared in local package.json
 yamat unlink 
+
+# publish all packages to npmjs.org. If a package is not meant to be published just 
+# add "private": false to its package.json
 yamat run npm publish
 
-# We link packages locally again to keep developing: 
+# link packages locally again to keep developing: 
 yamat link
 ```
 
