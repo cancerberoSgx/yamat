@@ -16,8 +16,9 @@
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
-    "yargs-parser": "^10.0.0",
-    "shelljs": "^0.8.2"
+    "executive": "^1.5.13",
+    "shelljs": "^0.8.2",
+    "yargs-parser": "^10.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.7",

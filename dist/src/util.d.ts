@@ -1,9 +1,11 @@
-import { ConfigEntry, UnlinkConfig } from ".";
+import { ConfigEntry } from ".";
 import { YamatConfig } from "./types";
 export declare function getConfig(config: YamatConfig): Array<ConfigEntry>;
+export declare function getConfigPath(config: YamatConfig): string;
 export declare function writeFile(file: string, data: string): void;
-export declare function getPackageJsonPath(unlinkConfig: UnlinkConfig, packagePath: string): string;
-export declare function getPackagePath(unlinkConfig: UnlinkConfig, packagePath: string): string;
-export declare function parsePackageJson(unlinkConfig: YamatConfig, path: string): any;
-export declare function writePackageJson(unlinkConfig: YamatConfig, path: string, data: any): void;
+export declare function getPackageJsonPath(config: YamatConfig, packagePath: string): string;
+export declare function getPackagePath(config: YamatConfig, packagePath: string): string;
+export declare function parsePackageJson(config: YamatConfig, path: string): any;
+export declare function writePackageJson(config: YamatConfig, path: string, data: any): void;
 export declare function getInternalFolder(config: YamatConfig): string;
+export declare function parseJSON(s: string): any;

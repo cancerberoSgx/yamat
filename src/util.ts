@@ -6,27 +6,30 @@ import { ConfigEntry, UnlinkConfig } from ".";
 import { YamatConfig } from "./types";
 
 export function getConfig(config: YamatConfig): Array<ConfigEntry> {
-  return JSON.parse(cat((config.rootPath || shell.pwd()) + '/' + (config.yamatJsonFile || 'yamat.json'))) // /TODO: cache
+  return JSON.parse(cat(getConfigPath(config))) // /TODO: cache
 }
 
+export function getConfigPath(config: YamatConfig):string{
+  return config.yamatJsonFile || (config.rootPath || shell.pwd()) + '/' + 'yamat.json'
+}
 export function writeFile(file: string, data: string) {
   (shell as any).ShellString(data).to(file)
 }
 
-export function getPackageJsonPath(unlinkConfig: UnlinkConfig, packagePath: string) {
-  return getPackagePath(unlinkConfig, packagePath) + sep + 'package.json'
+export function getPackageJsonPath(config: YamatConfig, packagePath: string) {
+  return getPackagePath(config, packagePath) + sep + 'package.json'
 }
 
-export function getPackagePath(unlinkConfig: UnlinkConfig, packagePath: string): string {
-  return unlinkConfig.rootPath + sep + packagePath
+export function getPackagePath(config: YamatConfig, packagePath: string): string {
+  return config.rootPath + sep + packagePath
 }
 
-export function parsePackageJson(unlinkConfig: YamatConfig, path: string) {
-  return JSON.parse(cat(getPackageJsonPath(unlinkConfig, path)))
+export function parsePackageJson(config: YamatConfig, path: string) {
+  return JSON.parse(cat(getPackageJsonPath(config, path)))
 }
 
-export function writePackageJson(unlinkConfig: YamatConfig, path: string, data: any) {
-  writeFileSync(getPackageJsonPath(unlinkConfig, path), JSON.stringify(data, null, 2))
+export function writePackageJson(config: YamatConfig, path: string, data: any) {
+  writeFileSync(getPackageJsonPath(config, path), JSON.stringify(data, null, 2))
 }
 
 const internalFolder = '.yamat'
@@ -36,4 +39,12 @@ export function getInternalFolder(config: YamatConfig) {
     shell.mkdir('-p', folderPath)
   }
   return resolve(folderPath)
+}
+
+export function parseJSON(s:string):any{
+  try {
+    return JSON.parse(s)
+  } catch (error) {
+    return error
+  }
 }

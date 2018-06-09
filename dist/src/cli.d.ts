@@ -1,1 +1,1 @@
-export declare function main(): void;
+export declare function main(): void | import("./force-dependency").ForceLatestDependenciesResult[][];

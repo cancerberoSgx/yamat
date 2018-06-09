@@ -40,4 +40,3 @@ ${JSON.stringify(results.filter(r => r.code !== 0), null, 2)}
     }
 }
 exports.run = run;
-//# sourceMappingURL=run.js.map

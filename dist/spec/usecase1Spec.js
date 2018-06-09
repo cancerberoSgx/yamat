@@ -82,4 +82,3 @@ npx yamat run  'echo "hello123" && exit 0'
     });
     //TODO: CLI - test other commands
 });
-//# sourceMappingURL=usecase1Spec.js.map
