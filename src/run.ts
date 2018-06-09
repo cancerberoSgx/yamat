@@ -20,7 +20,7 @@ export function run(runConfig: RunConfig) { // TODO: return RunResult with all r
     const code = exec(runConfig.cmd).code
     if (code !== 0) {
       console.error(`ERROR while trying to execute command "${runConfig.cmd}" in ${c.path}`)
-      if (runConfig.breakOnError!==undefined) {
+      if (runConfig.breakOnError) {
         process.exit(code)
       }
     } else {

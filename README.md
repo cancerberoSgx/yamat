@@ -37,7 +37,7 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 
 ## yamat run
 
- * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. For executing the command in all packages no matter if there are errors and then present a full report, execute it with `--break-on-error yes` for example, `yamat --break-on-error no run npm test` 
+ * **Runs a command on all packages**. For example `yamat run npm test` will execute `npm test` on each package, serially. If one ends with exit code different than 0 then yamat will also. By default yamat won't execute the command on following packages if one fails.Fr preventing this and run the command on all packages and then give a final report execute with ` --break-on-error no` argument like this: `yamat --break-on-error no run npm test`  . 
 
 
 # Common Publishing workflow 
@@ -133,8 +133,9 @@ yamat run npm version patch
 yamat unlink 
 
 # publish all packages to npmjs.org. If a package is not meant to be published just 
-# add "private": false to its package.json
-yamat run npm publish
+# add "private": false to its package.json. We execute it with  --break-on-error no 
+# because private packages will give error if we try to publish them:
+yamat --break-on-error no run npm publish
 
 # link packages locally again to keep developing: 
 yamat link
