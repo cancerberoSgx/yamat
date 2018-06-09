@@ -19,7 +19,7 @@ async function forceLatestDependencies(forceConfig) {
         }
         util_1.writePackageJson(forceConfig, c.path, pj);
     });
-    console.log(`Results of forceLatestDependencies command:\n${JSON.stringify(results, null, 2)}`); // TODO: console.log should be responsibility of cli
+    // console.log(`Results of forceLatestDependencies command:\n${JSON.stringify(results, null, 2)}`) // TODO: console.log should be responsibility of cli
     return results;
 }
 exports.forceLatestDependencies = forceLatestDependencies;

@@ -13,6 +13,7 @@ const exec: Executive = require('executive')
 // * same as before but for all dependencies yamat force-dependencies-latest
 
 
+//TODO: big issue - commands are executed in parallel and the return values are empty because async is handled incorrectly. 
 export interface ForceLatestDependenciesConfig extends YamatConfig {
   exclude: 'dependencies' | 'dev-dependencies' | 'none'
 }
@@ -32,7 +33,7 @@ export async function forceLatestDependencies(forceConfig: ForceLatestDependenci
     }
     writePackageJson(forceConfig, c.path, pj)
   })
-  console.log(`Results of forceLatestDependencies command:\n${JSON.stringify(results, null, 2)}`) // TODO: console.log should be responsibility of cli
+  // console.log(`Results of forceLatestDependencies command:\n${JSON.stringify(results, null, 2)}`) // TODO: console.log should be responsibility of cli
   return results
 }
 

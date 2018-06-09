@@ -24,7 +24,7 @@ async function main() {
     }
     else if (firstArg === 'forceDependenciesLatest') {
         await force_dependency_1.forceLatestDependencies(Object.assign({}, config, { exclude: args.exclude || 'none' }));
-        // console.log('cli end')
+        console.log('cli end');
         return;
     }
     else if (firstArg === 'link') {

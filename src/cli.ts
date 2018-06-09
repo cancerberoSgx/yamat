@@ -26,9 +26,9 @@ export async function main() {
     return run({ ...config, cmd, breakOnError: args.breakOnError !== 'no' })
   }
   else if (firstArg === 'forceDependenciesLatest') {
-    await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' })
+    return await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' })
     // console.log('cli end')
-    return
+    // return
   }
   else if (firstArg === 'link') {
     return link(config)
