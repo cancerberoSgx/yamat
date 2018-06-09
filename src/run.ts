@@ -10,7 +10,7 @@ import { getConfig } from "./util";
  * different than zero) and list each commend errors in a final report. If --breakOnError is passed
  * in which case it will break on first commend error and exit with the same command exit code. 
  */
-export function run(runConfig: RunConfig) {
+export function run(runConfig: RunConfig) { // TODO: return RunResult with all report information currenlty printed to stdout
   console.log(`Running in all packages command : ${JSON.stringify(runConfig)}`);
   const originalDir = pwd()
   const config = getConfig(runConfig)

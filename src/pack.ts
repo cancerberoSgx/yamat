@@ -6,7 +6,7 @@ import { join } from "path";
 /**
  * creates the pack file  for given targetConfig and return the path to the tgz
  */
-export function pack(config: UnlinkConfig, targetConfig: ConfigEntry): string {
+export function newone(config: UnlinkConfig, targetConfig: ConfigEntry): string {
   const cwd = pwd()
   cd(getInternalFolder(config))
   rm('-rf', targetConfig.name + '-*.tgz')

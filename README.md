@@ -9,6 +9,8 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
  * Not involved with the development cycle. 
  * Just a simple transformation back and forward in versions of your monorepo's `package.json` dependencies. Will never modify anything else but that 
  * User is responsible on everything else, publish, versioning, testing
+ * User is responsible of setting a **"prepare" script** that builds its project accordingly - if not unlink --version pack
+   won't work as well as npm publish 
  * User is responsible of correctly ordering dependencies in yamat.json so build doesn't fail
  * KISS. 
  * Don't try to be fast. 
@@ -130,18 +132,6 @@ yamat link
 ```
 
 
+# TODO - ROADMAP
 
-TODO
-
-* execute configs in order of dependencies - shouldn't be responsibility of the user
-* yamat init ./package1, foo/package2   etc etc to create the yamat.json file from given pacakges.
-* yamat unlink --version pack --target foo,bar // be able to only modify certain packages, not everyone 
-* Alternative `yamat unlink --version npm` will use the latest version found in npmjs.org (so we can test with the actual real thing)
-* yamat unlink --version global to point to the version installed globally - 
-* yamat unlink --version=pack to point to npm pack generated file so we are sure the publish will go fine. 
-* possible issue : yamat run npm run build: what about dependencies - we should build the roots first and then dependants... 
-* license
-* yamat.json - path nor required - if none use name as value
-* npm run test-js
-* yamat run spec
-* should yamat link set dependencies  with ^ ?
+see TODO.md file next to this

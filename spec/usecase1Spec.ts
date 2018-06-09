@@ -1,6 +1,6 @@
-import {rm, exec, ExecOutputReturnValue, cat, test} from 'shelljs'
+import {exec, ExecOutputReturnValue, cat, test} from 'shelljs'
 import { writeFile } from '../src/util';
-import { unlink, link, UnlinkVersion } from '../src';
+import { unlink, link, UnlinkVersion, run } from '../src';
 
 // important this tests need to be executed serially (jasmine random==false)
 describe('use case 1', () => {
@@ -47,7 +47,7 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 	})
 
 
-	it('yamat unlink', ()=>{
+	it('unlink', ()=>{
 		writeFile('project1/yamat.json', `
 		[
 				{"name": "foo", "path": "./foo"}, 
@@ -69,7 +69,7 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 
 	})
 
-	it('yamat unlink --version pack', ()=>{
+	it('unlink --version pack', ()=>{
 		unlink({rootPath: 'project1', version: UnlinkVersion.pack})
 		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz")
 		expect(test('-f', JSON.parse(cat('project1/bar/package.json')).dependencies.foo)).toBe(true)
@@ -79,6 +79,27 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 		expect(test('-f', JSON.parse(cat('project1/third/package.json')).dependencies.bar)).toBe(true)
 	})
 
+	xit('link', ()=>{
+	})
+
+	it('run', ()=>{
+		run({rootPath: 'project1', cmd: 'echo "hello" && exit 0', breakOnError: true})
+		//TODO: test  --breakOnError=true
+	})
 
 
+
+	// following are CLI test - TODO: put this in other file - we dont have time now - taking advantage of exiting test projects
+	it('CLI yamat run', ()=>{
+		const p = exec(`\\
+cd project1
+npm i --save-dev ..
+npx yamat run  'echo "hello123" && exit 0' 
+		`)
+		expect(p.code).toBe(0)
+		expect(p.stdout).toContain('hello123')
+		//TODO: test --breakOnError=true
+	})
+
+	//TODO: CLI - test other commands
 })

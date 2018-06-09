@@ -37,13 +37,13 @@ function modifyJSONDeps(pj, propertyName, unlinkConfig) {
                 pj[propertyName][d] = util_1.parsePackageJson(unlinkConfig, targetConfig.path).version;
             }
         }
-        else if (unlinkConfig.version === UnlinkVersion.pack) { // TODO: we might be exec npm pack several times for the same package !!! too slow!
+        else if (unlinkConfig.version === UnlinkVersion.pack) {
+            // TODO: we might be exec npm pack several times for the same package !!! too slow!
             const targetConfig = config.find(c => c.name === d);
             if (targetConfig) {
-                const targetTgz = path_1.resolve(pack_1.pack(unlinkConfig, targetConfig));
-                // we want absolute urls so dependencies of dependencies inside .tgz work! relative won't work in that
-                // case
-                pj[propertyName][d] = targetTgz; //join(getPackagePath(unlinkConfig, targetConfig.path), targetTgz)//relative(resolve(getPackagePath(unlinkConfig, targetConfig.path)), targetTgz) 
+                const targetTgz = path_1.resolve(pack_1.newone(unlinkConfig, targetConfig));
+                // we want absolute urls so dependencies of dependencies inside .tgz work! relative won't work in that case
+                pj[propertyName][d] = targetTgz;
             }
         }
         else if (unlinkConfig.version === UnlinkVersion.npm) {

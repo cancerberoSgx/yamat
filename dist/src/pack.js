@@ -7,7 +7,7 @@ const path_1 = require("path");
 /**
  * creates the pack file  for given targetConfig and return the path to the tgz
  */
-function pack(config, targetConfig) {
+function newone(config, targetConfig) {
     const cwd = shelljs_1.pwd();
     shelljs_1.cd(util_1.getInternalFolder(config));
     shelljs_1.rm('-rf', targetConfig.name + '-*.tgz');
@@ -18,5 +18,5 @@ function pack(config, targetConfig) {
     shelljs_1.cd(cwd);
     return path_1.join(util_1.getInternalFolder(config), tgzs[0]);
 }
-exports.pack = pack;
+exports.newone = newone;
 //# sourceMappingURL=pack.js.map
