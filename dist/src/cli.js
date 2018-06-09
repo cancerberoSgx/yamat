@@ -23,9 +23,7 @@ async function main() {
         return run_1.run(Object.assign({}, config, { cmd, breakOnError: args.breakOnError !== 'no' }));
     }
     else if (firstArg === 'forceDependenciesLatest') {
-        await force_dependency_1.forceLatestDependencies(Object.assign({}, config, { exclude: args.exclude || 'none' }));
-        console.log('cli end');
-        return;
+        return await force_dependency_1.forceLatestDependencies(Object.assign({}, config, { exclude: args.exclude || 'none' }));
     }
     else if (firstArg === 'link') {
         return link_1.link(config);
