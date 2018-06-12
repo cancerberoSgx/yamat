@@ -59,3 +59,4 @@ async function modifyJSONDeps(pj, propertyName, forceConfig, c) {
     });
     return result;
 }
+//# sourceMappingURL=force-dependency.js.map

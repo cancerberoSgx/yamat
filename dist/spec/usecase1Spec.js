@@ -63,7 +63,7 @@ cd project1/third && node index.js`);
         expect(JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar).toContain("project1/.yamat/bar-1.0.0.tgz");
         expect(shelljs_1.test('-f', JSON.parse(shelljs_1.cat('project1/third/package.json')).dependencies.bar)).toBe(true);
     });
-    xit('link', () => {
+    it('link', () => {
     });
     it('run', () => {
         src_1.run({ rootPath: 'project1', cmd: 'echo "hello" && exit 0', breakOnError: true });
@@ -82,3 +82,4 @@ npx yamat run  'echo "hello123" && exit 0'
     });
     //TODO: CLI - test other commands
 });
+//# sourceMappingURL=usecase1Spec.js.map

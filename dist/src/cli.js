@@ -6,6 +6,7 @@ const link_1 = require("./link");
 const run_1 = require("./run");
 const unlink_1 = require("./unlink");
 const util_1 = require("./util");
+const help_1 = require("./help");
 const args = require('yargs-parser')(process.argv.slice(2));
 async function main() {
     const config = {
@@ -14,8 +15,11 @@ async function main() {
     };
     config.yamatJsonFile = util_1.getConfigPath(config);
     const firstArg = args._[0];
-    console.log(`yamat command "${firstArg}" called with config: ${JSON.stringify(config)}`);
-    if (firstArg === 'unlink') {
+    // console.log(`yamat command "${firstArg}" called with config: ${JSON.stringify(config)}`)
+    if (args.help) {
+        help_1.helpAndExit(0);
+    }
+    else if (firstArg === 'unlink') {
         return unlink_1.unlink(Object.assign({}, config, { version: args.version || unlink_1.UnlinkVersion.local }));
     }
     else if (firstArg === 'run') {
@@ -32,3 +36,4 @@ async function main() {
         throw new Error('Incorrect call. TODO: usage instructions');
 }
 exports.main = main;
+//# sourceMappingURL=cli.js.map

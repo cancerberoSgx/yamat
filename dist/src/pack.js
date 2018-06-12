@@ -19,3 +19,4 @@ function newone(config, targetConfig) {
     return path_1.join(util_1.getInternalFolder(config), tgzs[0]);
 }
 exports.newone = newone;
+//# sourceMappingURL=pack.js.map

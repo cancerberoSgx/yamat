@@ -79,7 +79,7 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 		expect(test('-f', JSON.parse(cat('project1/third/package.json')).dependencies.bar)).toBe(true)
 	})
 
-	xit('link', ()=>{
+	it('link', ()=>{
 	})
 
 	it('run', ()=>{

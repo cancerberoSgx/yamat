@@ -5,6 +5,7 @@ import { link } from "./link";
 import { run } from "./run";
 import { unlink, UnlinkVersion } from "./unlink";
 import { getConfigPath } from "./util";
+import { helpAndExit } from "./help";
 
 const args = require('yargs-parser')(process.argv.slice(2));
 
@@ -16,9 +17,12 @@ export async function main() {
   config.yamatJsonFile = getConfigPath(config)
 
   const firstArg = args._[0]
-  console.log(`yamat command "${firstArg}" called with config: ${JSON.stringify(config)}`)
+  // console.log(`yamat command "${firstArg}" called with config: ${JSON.stringify(config)}`)
 
-  if (firstArg === 'unlink') {
+  if(args.help){
+    helpAndExit(0)
+  }
+  else if (firstArg === 'unlink') {
     return unlink({ ...config, version: args.version || UnlinkVersion.local })
   }
   else if (firstArg === 'run') {
@@ -27,8 +31,6 @@ export async function main() {
   }
   else if (firstArg === 'forceDependenciesLatest') {
     return await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' })
-    // console.log('cli end')
-    // return
   }
   else if (firstArg === 'link') {
     return link(config)
