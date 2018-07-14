@@ -27,7 +27,7 @@ async function main() {
         return run_1.run(Object.assign({}, config, { cmd, breakOnError: args.breakOnError !== 'no' }));
     }
     else if (firstArg === 'forceDependenciesLatest') {
-        return await force_dependency_1.forceLatestDependencies(Object.assign({}, config, { exclude: args.exclude || 'none' }));
+        return await force_dependency_1.forceLatestDependencies(Object.assign({}, config, { exclude: args.exclude || 'none', excludeDependencies: (args.excludeDependencies || '').split(',') }));
     }
     else if (firstArg === 'link') {
         return link_1.link(config);

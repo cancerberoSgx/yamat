@@ -23,5 +23,10 @@ Upgrade all dependencies in al packages to latest version found in npmjs.org:
 
 yamat forceDependenciesLatest
 
+or just some: 
+
+
+yamat forceDependenciesLatest --exclude dev-dependencies --excludeDependencies moment,typescript
+
 `)
 }

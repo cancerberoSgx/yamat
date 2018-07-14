@@ -9,3 +9,5 @@
  * yamat help
 
  ## 0.0.14
+
+ * yamat forceDependenciesLatest --exclude dev-dependencies --excludeDependencies moment,typescript

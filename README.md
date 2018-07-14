@@ -41,7 +41,13 @@ Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves t
 
 ## yamat forceDependenciesLatest
 
- * Upgrade all dependencies in al packages to latest version found in npmjs.org
+ * Upgrade all or some dependencies in al packages to latest version found in npmjs.org, examples
+
+```
+yamat forceDependenciesLatest
+yamat forceDependenciesLatest --exclude dev-dependencies
+yamat forceDependenciesLatest --excludeDependencies moment,typescript
+```
 
 ## yamat help
 

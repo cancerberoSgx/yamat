@@ -30,7 +30,7 @@ export async function main() {
     return run({ ...config, cmd, breakOnError: args.breakOnError !== 'no' })
   }
   else if (firstArg === 'forceDependenciesLatest') {
-    return await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' })
+    return await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' , excludeDependencies: (args.excludeDependencies||'').split(',')})
   }
   else if (firstArg === 'link') {
     return link(config)

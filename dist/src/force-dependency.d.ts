@@ -1,6 +1,7 @@
-import { YamatConfig } from "./types";
+import { YamatConfig } from './types';
 export interface ForceLatestDependenciesConfig extends YamatConfig {
     exclude: 'dependencies' | 'dev-dependencies' | 'none';
+    excludeDependencies: string[];
 }
 export declare function forceLatestDependencies(forceConfig: ForceLatestDependenciesConfig): Promise<ForceLatestDependenciesResult[][]>;
 export interface ForceLatestDependenciesResult {

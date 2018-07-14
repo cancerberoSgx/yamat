@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const shelljs_1 = require("shelljs");
 const util_1 = require("../src/util");
 const src_1 = require("../src");
+shelljs_1.config.silent = true;
 // important this tests need to be executed serially (jasmine random==false)
 describe('use case 1', () => {
     let p;
@@ -79,6 +80,19 @@ npx yamat run  'echo "hello123" && exit 0'
         expect(p.code).toBe(0);
         expect(p.stdout).toContain('hello123');
         //TODO: test --breakOnError=true
+    });
+    it('CLI yamat yamat forceDependenciesLatest', () => {
+        //TODO. --exclude --excludeDependencies
+        const p = shelljs_1.exec(`\\
+cd project1/foo && \\
+npm i --save hrtime-now@1.0.0 && \\
+cd .. && \\
+npx yamat forceDependenciesLatest && \\
+cd ..
+		`);
+        expect(p.code).toBe(0);
+        const dependencies = JSON.parse(shelljs_1.cat('project1/foo/package.json')).dependencies;
+        expect(dependencies['hrtime-now']).not.toBe('1.0.0');
     });
     //TODO: CLI - test other commands
 });

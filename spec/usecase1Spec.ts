@@ -1,6 +1,8 @@
-import {exec, ExecOutputReturnValue, cat, test} from 'shelljs'
+import { exec, ExecOutputReturnValue, cat, test, config } from 'shelljs'
 import { writeFile } from '../src/util';
 import { unlink, link, UnlinkVersion, run } from '../src';
+
+config.silent = true
 
 // important this tests need to be executed serially (jasmine random==false)
 describe('use case 1', () => {
@@ -27,10 +29,10 @@ echo "console.log('foo say: '+require('foo'))"> index.js && node index.js`)
 	})
 
 
-	
-	it('create other package that depends on var', ()=>{
 
-		p=exec(`\\
+	it('create other package that depends on var', () => {
+
+		p = exec(`\\
 		cd project1/bar  && echo "module.exports.msg = 'msg from foo: '+require('foo')"> index.js && node index.js`
 		)
 		expect(p.code).toBe(0)
@@ -41,13 +43,13 @@ npm install --save ../foo ../bar && \\
 echo "console.log('third responds: '+require('bar').msg + ' '+ require('foo'))" > index.js `
 		).code).toBe(0)
 		p = exec(`\\
-cd project1/third && node index.js`) 
-expect(p.code).toBe(0)
-expect(p.stdout).toContain(`third responds: msg from foo: different message different message`)
+cd project1/third && node index.js`)
+		expect(p.code).toBe(0)
+		expect(p.stdout).toContain(`third responds: msg from foo: different message different message`)
 	})
 
 
-	it('unlink', ()=>{
+	it('unlink', () => {
 		writeFile('project1/yamat.json', `
 		[
 				{"name": "foo", "path": "./foo"}, 
@@ -57,11 +59,11 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar")
-		unlink({rootPath: 'project1'})
+		unlink({ rootPath: 'project1' })
 		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("1.0.0")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("1.0.0")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("1.0.0")
-		link({rootPath: 'project1'})
+		link({ rootPath: 'project1' })
 		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toBe("file:../foo")
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar")
@@ -69,8 +71,8 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 
 	})
 
-	it('unlink --version pack', ()=>{
-		unlink({rootPath: 'project1', version: UnlinkVersion.pack})
+	it('unlink --version pack', () => {
+		unlink({ rootPath: 'project1', version: UnlinkVersion.pack })
 		expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz")
 		expect(test('-f', JSON.parse(cat('project1/bar/package.json')).dependencies.foo)).toBe(true)
 		expect(JSON.parse(cat('project1/third/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz")
@@ -79,18 +81,18 @@ expect(p.stdout).toContain(`third responds: msg from foo: different message diff
 		expect(test('-f', JSON.parse(cat('project1/third/package.json')).dependencies.bar)).toBe(true)
 	})
 
-	it('link', ()=>{
+	it('link', () => {
 	})
 
-	it('run', ()=>{
-		run({rootPath: 'project1', cmd: 'echo "hello" && exit 0', breakOnError: true})
+	it('run', () => {
+		run({ rootPath: 'project1', cmd: 'echo "hello" && exit 0', breakOnError: true })
 		//TODO: test  --breakOnError=true
 	})
 
 
 
 	// following are CLI test - TODO: put this in other file - we dont have time now - taking advantage of exiting test projects
-	it('CLI yamat run', ()=>{
+	it('CLI yamat run', () => {
 		const p = exec(`\\
 cd project1
 npm i --save-dev ..
@@ -100,6 +102,21 @@ npx yamat run  'echo "hello123" && exit 0'
 		expect(p.stdout).toContain('hello123')
 		//TODO: test --breakOnError=true
 	})
+
+	it('CLI yamat yamat forceDependenciesLatest', () => {
+		//TODO. --exclude --excludeDependencies
+		const p = exec(`\\
+cd project1/foo && \\
+npm i --save hrtime-now@1.0.0 && \\
+cd .. && \\
+npx yamat forceDependenciesLatest && \\
+cd ..
+		`)
+		expect(p.code).toBe(0)
+		const dependencies = JSON.parse(cat('project1/foo/package.json')).dependencies
+		expect(dependencies['hrtime-now']).not.toBe('1.0.0')
+	})
+
 
 	//TODO: CLI - test other commands
 })
