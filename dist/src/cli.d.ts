@@ -1,1 +1,1 @@
-export declare function main(): Promise<void | import("./force-dependency").ForceLatestDependenciesResult[][]>;
+export declare function main(): Promise<void | (import("./force-dependency").ForceLatestDependenciesResult | undefined)[][][]>;

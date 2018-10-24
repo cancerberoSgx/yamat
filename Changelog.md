@@ -11,3 +11,7 @@
  ## 0.0.15
 
  * yamat forceDependenciesLatest --exclude dev-dependencies --excludeDependencies moment,typescript
+
+## 0.0.16
+
+ * fix force-dependency command for huge projects - limiting concurrency

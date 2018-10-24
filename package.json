@@ -1,6 +1,6 @@
 {
   "name": "yamat",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "yamat: Yet Another Mono-repo Administration Tool",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -17,12 +17,14 @@
   "license": "MIT",
   "dependencies": {
     "executive": "^1.6.3",
+    "p-map": "^2.0.0",
     "shelljs": "^0.8.2",
     "yargs-parser": "^10.1.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
     "@types/node": "^10.5.2",
+    "@types/p-map": "^1.1.0",
     "@types/shelljs": "^0.8.0",
     "jasmine": "^3.1.0",
     "ts-node": "^7.0.0",
