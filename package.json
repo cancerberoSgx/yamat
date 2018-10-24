@@ -1,6 +1,6 @@
 {
   "name": "yamat",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "yamat: Yet Another Mono-repo Administration Tool",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",

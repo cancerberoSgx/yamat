@@ -15,3 +15,7 @@
 ## 0.0.16
 
  * fix force-dependency command for huge projects - limiting concurrency
+
+## 0.0.17
+
+ * forceDependenciesLatest better result report

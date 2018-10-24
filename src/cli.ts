@@ -30,7 +30,13 @@ export async function main() {
     return run({ ...config, cmd, breakOnError: args.breakOnError !== 'no' })
   }
   else if (firstArg === 'forceDependenciesLatest') {
-    return await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' , excludeDependencies: (args.excludeDependencies||'').split(',')})
+    const result = await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' , excludeDependencies: (args.excludeDependencies||'').split(',')})
+
+    const errors = result.filter(r1=>!!r1.filter(r2=>!!r2.filter(r3=>r3!==undefined && r3.errorCause)))
+    if(errors){
+      console.log('ERROR occurred when trying to update dependencies in some projects. Probably you will need to `rm package-lock.json` manually - I won\'t. Errors: \n'+JSON.stringify(errors, null, 2)+'\nAborted.');
+      process.exit(1)
+    }
   }
   else if (firstArg === 'link') {
     return link(config)

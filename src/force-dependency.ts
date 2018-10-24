@@ -7,7 +7,7 @@ import PQueue from 'p-queue'
 import pMap from 'p-map'
 
 // TODO
-//
+// * --abort-on-first-error
 // * list all versions of given external dependency used by all managed packages
 // * utilities to make sure all managed projects are using the same version of a given external dependency : ex:
 //   yamat force-dependency-version 'typescript@2.9.1'
@@ -23,15 +23,9 @@ export interface ForceLatestDependenciesConfig extends YamatConfig {
 }
 
 export async function forceLatestDependencies(forceConfig: ForceLatestDependenciesConfig): Promise<(ForceLatestDependenciesResult|undefined)[][][]> {
-  // const results: ForceLatestDependenciesResult[][] = []
   const config = getConfig(forceConfig)
-
-  // const queue = new PQueue({ concurrency: 1 });
-  // const concurrent = pLimit(1)
   const mapper = async (c: ConfigEntry): Promise<(ForceLatestDependenciesResult|undefined)[][]> => {
     const results: (ForceLatestDependenciesResult|undefined)[][] =[]
-    // queue.add(() => {
-      // return new Promise(async resolve=>{
         console.log('\nUpdating dependencies of project ' + c.name + '\n')
         const pj = parsePackageJson(forceConfig, c.path)
         if (forceConfig.exclude !== 'dependencies') {
@@ -44,12 +38,8 @@ export async function forceLatestDependencies(forceConfig: ForceLatestDependenci
         }
         writePackageJson(forceConfig, c.path, pj)
         return results
-        // resolve()
-      // })
     }
-  
     return pMap(config, mapper, {concurrency: 2})
-  // return results
 }
 
 export interface ForceLatestDependenciesResult {
@@ -66,20 +56,14 @@ async function modifyJSONDeps(pj: any, propertyName: string, forceConfig: ForceL
   const dependencies = pj[propertyName] || {}
   const dependencyNames =  Object.keys(dependencies)
     .filter(d => !config.find(c => c.name === d))
-
-
-  // dependencyNames
-  //   .forEach(
     const mapper =  async (d: string) => {
       if (forceConfig.excludeDependencies.includes(d)) {
         return
       }
       const cmd = `npm show ${d} version --json`
       const p = await exec(cmd)
-      console.log(`dependency ${d} command ${cmd} ended with status ${p.status}`);
       if (p.status) {
         return { cmd, package: d, errorCause: `Command '${cmd}' failed with return status ${p.status}` }
-        // return
       }
       const parsed = parseJSON(p.stdout.toString())
       if (parsed instanceof Error) {
@@ -91,17 +75,16 @@ async function modifyJSONDeps(pj: any, propertyName: string, forceConfig: ForceL
       if (!currentVersion.endsWith(parsedVersion)) { // endsWith cause current could have tildes, etc
         const prefix = resolve(getPackagePath(forceConfig, c.path))
         const cmd2 = `npm install --no-color --no-progress --prefix '${prefix}' ${propertyName === 'dependencies' ? '--save' : '--save-dev'} ${d}@${parsedVersion}`
-        console.log(`dependency ${d} command ${cmd2} started`);
         const p2 = await exec(cmd2)
         console.log(`dependency ${d} command ${cmd2} ended with status ${p2.status}`);
         if (p2.status) {
-          return { cmd: cmd2, package: d, errorCause: `Command '${cmd2}' failed with return status ${p2.status}` }
-          // return
+          return { cmd: cmd2, package: d, errorCause: `Command '${cmd2}' failed with return status ${p2.status}. \nstderr was: ${p2.stderr}` }
         }
+        // console.log(`dependency ${d} command ${cmd2} ${JSON.stringify({ newVersion: parsedVersion, oldVersion: currentVersion })}`);
+        
         return { cmd: cmd2, package: d, newVersion: parsedVersion, oldVersion: currentVersion }
       }
     }
-
     return pMap(dependencyNames, mapper, {concurrency: 2})
   // return result
 }
