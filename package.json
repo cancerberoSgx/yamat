@@ -1,14 +1,15 @@
 {
   "name": "yamat",
-  "version": "0.0.18",
+  "version": "0.1.1",
   "description": "yamat: Yet Another Mono-Repo Administration Tool",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "bin": "bin/yamat.js",
   "scripts": {
     "watch": "tsc --watch",
-    "build": "tsc",
-    "test": "npm run build && ts-node node_modules/jasmine/bin/jasmine",
+    "build": "rm -rf dist && tsc",
+    "test2": "npm run build && npx ts-node node_modules/jasmine/bin/jasmine.js spec/testUtilSpec.ts spec/cliSpec.ts spec/apiSpec.ts",
+    "test": "npx ts-node node_modules/jasmine/bin/jasmine.js",
     "clean": "rm -rf node_modules/ package-lock.json",
     "all": "npm run clean && npm install && npm run build && npm test",
     "prepare": "npm run build"

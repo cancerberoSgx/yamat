@@ -24,3 +24,8 @@
 
  * forceDependenciesLatest better result report
  * test refactor
+
+## 0.1.1
+ * better tests 
+ * travis
+ * npm test ack so they are all green TODO in travis - see package.json

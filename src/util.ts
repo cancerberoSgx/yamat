@@ -6,7 +6,11 @@ import { ConfigEntry } from ".";
 import { YamatConfig } from "./types";
 
 export function getConfig(config: YamatConfig): Array<ConfigEntry> {
-  return shell.test('-f', getConfigPath(config)) ? JSON.parse(cat(getConfigPath(config))) : [] // /TODO: cache
+  config.rootPath = config.rootPath ||'.'
+  return shell.test('-f', getConfigPath(config)) ? JSON.parse(cat(getConfigPath(config))) : [{
+    name: JSON.parse(cat(config.rootPath+'/package.json')).name, path: '.'}] // Heads up - we leave only rootPath if if there is no yamat.json file
+    
+    // TODO: cache
 }
 
 export function getConfigPath(config: YamatConfig): string {
