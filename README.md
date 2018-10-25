@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/cancerberoSgx/yamat.png?branch=master)](https://travis-ci.org/cancerberoSgx/yamat)
+[![Greenkeeper badge](https://badges.greenkeeper.io/cancerberoSgx/yamat.svg)](https://greenkeeper.io/)
+[![Dependencies](https://david-dm.org/cancerberosgx/yamat.svg)](https://david-dm.org/cancerberosgx/yamat)
+
 # yamat: Yet Another Monorepo Administration Tool
 
 Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves the problem of mono repos (multiple packages in the same repository) with a very straightforward solution. 
