@@ -1,4 +1,3 @@
-
 export interface YamatConfig {
   /** path to root project  by default it is pwd() */
   rootPath?: string

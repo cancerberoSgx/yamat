@@ -1,11 +1,11 @@
 import { pwd } from "shelljs";
 import { YamatConfig } from ".";
 import { forceLatestDependencies } from "./force-dependency";
+import { helpAndExit } from "./help";
 import { link } from "./link";
 import { run } from "./run";
 import { unlink, UnlinkVersion } from "./unlink";
-import { getConfigPath } from "./util";
-import { helpAndExit } from "./help";
+import { getConfigPath, flattenDeep } from "./util";
 
 const args = require('yargs-parser')(process.argv.slice(2));
 
@@ -15,11 +15,8 @@ export async function main() {
     yamatJsonFile: args.yamatJsonFile
   }
   config.yamatJsonFile = getConfigPath(config)
-
   const firstArg = args._[0]
-  // console.log(`yamat command "${firstArg}" called with config: ${JSON.stringify(config)}`)
-
-  if(args.help){
+  if (args.help) {
     helpAndExit(0)
   }
   else if (firstArg === 'unlink') {
@@ -30,17 +27,10 @@ export async function main() {
     return run({ ...config, cmd, breakOnError: args.breakOnError !== 'no' })
   }
   else if (firstArg === 'forceDependenciesLatest') {
-    let result = await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' , excludeDependencies: (args.excludeDependencies||'').split(',')})
-
-     result = result.filter(r=>{
-      return r && r.errorCause
-    })
-    console.log('RESULT', {result});
-    
-    // const errors = result.filter(r1=>!!r1.filter(r2=>!!r2.filter(r3=>r3!==undefined && r3.errorCause)))
-    
-    if(result.length){
-      console.log('ERROR occurred when trying to update dependencies in some projects. Probably you will need to `rm package-lock.json node_modules` manually - I won\'t. Errors: \n'+JSON.stringify(result, null, 2)+'\nAborted.');
+    let result = await forceLatestDependencies({ ...config, exclude: args.exclude || 'none', excludeDependencies: (args.excludeDependencies || '').split(',') })
+    result = flattenDeep(result).find(r => r && r.errorCause)
+    if (result.length) {
+      console.log('ERROR occurred when trying to update dependencies in some projects. Probably you will need to `rm package-lock.json node_modules` manually - I won\'t. Examine the results below, go to each error and remove node_modules and package-lock.json will solve the issues of npm install, in general.\n Errors: \n' + JSON.stringify(result, null, 2) + '\nAborted.');
       process.exit(1)
     }
   }

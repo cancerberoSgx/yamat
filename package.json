@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
-    "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "test": "npm run build && ts-node node_modules/jasmine/bin/jasmine",
     "clean": "rm -rf node_modules/ package-lock.json",
     "all": "npm run clean && npm install && npm run build && npm test",
     "prepare": "npm run build"

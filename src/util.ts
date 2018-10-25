@@ -1,15 +1,15 @@
 import { writeFileSync } from 'fs';
-import { sep, join, resolve } from 'path';
+import { join, resolve, sep } from 'path';
 import * as shell from 'shelljs';
 import { cat } from "shelljs";
-import { ConfigEntry, UnlinkConfig } from ".";
+import { ConfigEntry } from ".";
 import { YamatConfig } from "./types";
 
 export function getConfig(config: YamatConfig): Array<ConfigEntry> {
-  return shell.test('-f', getConfigPath(config)) ?  JSON.parse(cat(getConfigPath(config))) : [] // /TODO: cache
+  return shell.test('-f', getConfigPath(config)) ? JSON.parse(cat(getConfigPath(config))) : [] // /TODO: cache
 }
 
-export function getConfigPath(config: YamatConfig):string{
+export function getConfigPath(config: YamatConfig): string {
   return config.yamatJsonFile || (config.rootPath || shell.pwd()) + '/' + 'yamat.json'
 }
 export function writeFile(file: string, data: string) {
@@ -34,17 +34,21 @@ export function writePackageJson(config: YamatConfig, path: string, data: any) {
 
 const internalFolder = '.yamat'
 export function getInternalFolder(config: YamatConfig) {
-  const folderPath = join(config.rootPath||'.', internalFolder)
+  const folderPath = join(config.rootPath || '.', internalFolder)
   if (!shell.test('-d', folderPath)) {
     shell.mkdir('-p', folderPath)
   }
   return resolve(folderPath)
 }
 
-export function parseJSON(s:string):any{
+export function parseJSON(s: string): any {
   try {
     return JSON.parse(s)
   } catch (error) {
     return error
   }
 }
+
+export function flattenDeep(arr1: any[]): any[] {
+  return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+} 

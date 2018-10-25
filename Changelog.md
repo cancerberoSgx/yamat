@@ -19,3 +19,7 @@
 ## 0.0.17
 
  * forceDependenciesLatest better result report
+
+## 0.0.18
+
+ * forceDependenciesLatest better result report
