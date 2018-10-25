@@ -23,3 +23,4 @@
 ## 0.0.18
 
  * forceDependenciesLatest better result report
+ * test refactor
