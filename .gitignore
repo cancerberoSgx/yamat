@@ -1,12 +1,8 @@
-# Ignore NPM package folders
+dist
 node_modules
 tests
-# Ignore Rush temporary files
-/common/temp/**
-
 *.log
 tmp
 project1
 *.tgz
-
 .yamat

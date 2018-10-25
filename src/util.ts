@@ -6,7 +6,7 @@ import { ConfigEntry, UnlinkConfig } from ".";
 import { YamatConfig } from "./types";
 
 export function getConfig(config: YamatConfig): Array<ConfigEntry> {
-  return JSON.parse(cat(getConfigPath(config))) // /TODO: cache
+  return shell.test('-f', getConfigPath(config)) ?  JSON.parse(cat(getConfigPath(config))) : [] // /TODO: cache
 }
 
 export function getConfigPath(config: YamatConfig):string{

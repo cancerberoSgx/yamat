@@ -12,7 +12,7 @@ const path_1 = require("path");
 const shell = __importStar(require("shelljs"));
 const shelljs_1 = require("shelljs");
 function getConfig(config) {
-    return JSON.parse(shelljs_1.cat(getConfigPath(config))); // /TODO: cache
+    return shell.test('-f', getConfigPath(config)) ? JSON.parse(shelljs_1.cat(getConfigPath(config))) : []; // /TODO: cache
 }
 exports.getConfig = getConfig;
 function getConfigPath(config) {

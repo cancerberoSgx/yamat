@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const executive_1 = require("executive");
-const path_1 = require("path");
-const util_1 = require("./util");
 const p_map_1 = __importDefault(require("p-map"));
+const path_1 = require("path");
+const shelljs_1 = require("shelljs");
+const util_1 = require("./util");
 async function forceLatestDependencies(forceConfig) {
     const config = util_1.getConfig(forceConfig);
     const mapper = async (c) => {
@@ -29,7 +30,6 @@ async function forceLatestDependencies(forceConfig) {
 exports.forceLatestDependencies = forceLatestDependencies;
 async function modifyJSONDeps(pj, propertyName, forceConfig, c) {
     const config = util_1.getConfig(forceConfig);
-    const result = [];
     const dependencies = pj[propertyName] || {};
     const dependencyNames = Object.keys(dependencies)
         .filter(d => !config.find(c => c.name === d));
@@ -45,23 +45,24 @@ async function modifyJSONDeps(pj, propertyName, forceConfig, c) {
         const parsed = util_1.parseJSON(p.stdout.toString());
         if (parsed instanceof Error) {
             return { cmd, package: d, errorCause: `Cannot parse response of '${cmd}' command: ${p.stdout.toString()}` };
-            // return
         }
         const currentVersion = dependencies[d] + '';
         const parsedVersion = parsed + '';
-        if (!currentVersion.endsWith(parsedVersion)) { // endsWith cause current could have tildes, etc
+        if (!currentVersion.endsWith(parsedVersion)) { // endsWith because current could have tildes, etc
             const prefix = path_1.resolve(util_1.getPackagePath(forceConfig, c.path));
+            shelljs_1.rm('-rf', `${prefix}/package-lock.json`); // Heads up - remove package-lock will prevent several errors when trying to execute cmd2
             const cmd2 = `npm install --no-color --no-progress --prefix '${prefix}' ${propertyName === 'dependencies' ? '--save' : '--save-dev'} ${d}@${parsedVersion}`;
             const p2 = await executive_1.quiet(cmd2);
             console.log(`dependency ${d} command ${cmd2} ended with status ${p2.status}`);
             if (p2.status) {
                 return { cmd: cmd2, package: d, errorCause: `Command '${cmd2}' failed with return status ${p2.status}. \nstderr was: ${p2.stderr}` };
             }
-            // console.log(`dependency ${d} command ${cmd2} ${JSON.stringify({ newVersion: parsedVersion, oldVersion: currentVersion })}`);
             return { cmd: cmd2, package: d, newVersion: parsedVersion, oldVersion: currentVersion };
         }
     };
-    return p_map_1.default(dependencyNames, mapper, { concurrency: 2 });
-    // return result
+    const result = await p_map_1.default(dependencyNames, mapper, { concurrency: 2 });
+    return result.filter(r => {
+        return r && r.errorCause;
+    });
 }
 //# sourceMappingURL=force-dependency.js.map

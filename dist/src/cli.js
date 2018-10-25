@@ -28,9 +28,10 @@ async function main() {
     }
     else if (firstArg === 'forceDependenciesLatest') {
         const result = await force_dependency_1.forceLatestDependencies(Object.assign({}, config, { exclude: args.exclude || 'none', excludeDependencies: (args.excludeDependencies || '').split(',') }));
-        const errors = result.filter(r1 => !!r1.filter(r2 => !!r2.filter(r3 => r3 !== undefined && r3.errorCause)));
-        if (errors) {
-            console.log('ERROR occurred when trying to update dependencies in some projects. Probably you will need to `rm package-lock.json` manually - I won\'t. Errors: \n' + JSON.stringify(errors, null, 2) + '\nAborted.');
+        console.log('RESULT', { result });
+        // const errors = result.filter(r1=>!!r1.filter(r2=>!!r2.filter(r3=>r3!==undefined && r3.errorCause)))
+        if (result.length) {
+            console.log('ERROR occurred when trying to update dependencies in some projects. Probably you will need to `rm package-lock.json node_modules` manually - I won\'t. Errors: \n' + JSON.stringify(result, null, 2) + '\nAborted.');
             process.exit(1);
         }
     }
