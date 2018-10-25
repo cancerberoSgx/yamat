@@ -57,7 +57,7 @@ cd project1/third && node index.js`)
 		})
 
 
-		it('unlink', () => {
+		xit('unlink', () => {
 			writeFile('project1/yamat.json', `
 		[
 				{"name": "foo", "path": "./foo"}, 
@@ -77,7 +77,7 @@ cd project1/third && node index.js`)
 			expect(JSON.parse(cat('project1/third/package.json')).dependencies.bar).toBe("file:../bar")
 		})
 
-		it('unlink --version pack', () => {
+		xit('unlink --version pack', () => {
 			unlink({ rootPath: 'project1', version: UnlinkVersion.pack })
 			expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toContain("project1/.yamat/foo-1.0.0.tgz")
 			expect(test('-f', JSON.parse(cat('project1/bar/package.json')).dependencies.foo)).toBe(true)
@@ -90,7 +90,7 @@ cd project1/third && node index.js`)
 		xit('link', () => {
 		})
 
-		it('run', () => {
+		xit('run', () => {
 			run({ rootPath: 'project1', cmd: 'echo "hello" && exit 0', breakOnError: true })
 			// TODO: expect here ? 
 		})
@@ -102,7 +102,7 @@ cd project1/third && node index.js`)
 
 	describe('CLI', () => {
 		// following are CLI test - TODO: put this in other file - we dont have time now - taking advantage of exiting test projects
-		it('yamat run', () => {
+		xit('yamat run', () => {
 			const p = exec(`\\
 cd project1
 npm i --save-dev ..

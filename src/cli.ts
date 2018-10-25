@@ -30,8 +30,11 @@ export async function main() {
     return run({ ...config, cmd, breakOnError: args.breakOnError !== 'no' })
   }
   else if (firstArg === 'forceDependenciesLatest') {
-    const result = await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' , excludeDependencies: (args.excludeDependencies||'').split(',')})
+    let result = await forceLatestDependencies({ ...config, exclude: args.exclude || 'none' , excludeDependencies: (args.excludeDependencies||'').split(',')})
 
+     result = result.filter(r=>{
+      return r && r.errorCause
+    })
     console.log('RESULT', {result});
     
     // const errors = result.filter(r1=>!!r1.filter(r2=>!!r2.filter(r3=>r3!==undefined && r3.errorCause)))

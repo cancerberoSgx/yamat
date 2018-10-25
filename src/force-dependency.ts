@@ -80,7 +80,5 @@ async function modifyJSONDeps(pj: any, propertyName: string, forceConfig: ForceL
     }
   }
   const result = await pMap(dependencyNames, mapper, { concurrency: 2 })
-  return result.filter(r=>{
-    return r && r.errorCause
-  })
+  return result
 }
