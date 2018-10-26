@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/cancerberoSgx/yamat.png?branch=master)](https://travis-ci.org/cancerberoSgx/yamat)
-[![Greenkeeper badge](https://badges.greenkeeper.io/cancerberoSgx/yamat.svg)](https://greenkeeper.io/)
 [![Dependencies](https://david-dm.org/cancerberosgx/yamat.svg)](https://david-dm.org/cancerberosgx/yamat)
 
 # yamat: Yet Another Monorepo Administration Tool
