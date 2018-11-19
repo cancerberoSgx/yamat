@@ -3,11 +3,18 @@ jobs:
 
   pool:
     vmImage: 'ubuntu 16.04'
+    
+  strategy:
+    matrix:
+      node_8_x:
+        node_version: 8.x
+      node_9_x:
+        node_version: 10.x
 
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.x'
+      versionSpec: $(node_version)
 
   - script: |
       npm install
@@ -28,3 +35,5 @@ jobs:
       npm test
       
   - task: PublishBuildArtifacts@1
+
+- script: npm publish
