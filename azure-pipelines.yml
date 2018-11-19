@@ -6,8 +6,6 @@ jobs:
     
   strategy:
     matrix:
-      node_8_x:
-        node_version: 8.x
       node_10_x:
         node_version: 10.x
       node_11_x:
@@ -30,7 +28,7 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.x'
+      versionSpec: '10.x'
 
   - script: |
       npm install
