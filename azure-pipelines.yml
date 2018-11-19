@@ -19,6 +19,8 @@ jobs:
   - script: |
       npm install
       npm test
+  
+  - script: npm publish
 
 - job: Windows
 
@@ -36,4 +38,4 @@ jobs:
       
   - task: PublishBuildArtifacts@1
 
-- script: npm publish
+
