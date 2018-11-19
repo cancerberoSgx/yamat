@@ -13,10 +13,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-  echo "node version `node -v`"
-  echo "npm version `npm -v`" 
-  npm install && \
-  npm run build
+    echo "node version `node -v`"
+    echo "npm version `npm -v`" 
+    npm install && \
+    npm run build
   displayName: 'install and build'
 
 - script: |
