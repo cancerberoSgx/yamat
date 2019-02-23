@@ -1,5 +1,5 @@
 import { config, exec, ExecOutputReturnValue } from 'shelljs';
-import { writeFile } from '../src/util';
+import { writeFile, sleep } from '../src/util';
 
 config.silent = false
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
@@ -48,15 +48,20 @@ export function initializeProject1(performBeforeAll: (boolean | 'beforeAll' | 'b
 	}
 
 	if (performBeforeAll === true || performBeforeAll === 'beforeAll') {
-		beforeAll(fn)
+		beforeAll(async ()=>{
+
+			await sleep(1000)
+			await fn()
+			await sleep(1000)
+		})
 	}
 	else if (performBeforeAll === 'beforeEach') {
-		beforeEach(fn)
+		beforeEach(async ()=>{
+			await sleep(1000)
+			await fn()
+			await sleep(1000)
+		})
 	}
-	else {
-		fn()
-	}
-
 }
 
 export function exec0(cmd: string, expect0StatusCode: boolean = true): ExecOutputReturnValue {

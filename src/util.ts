@@ -45,14 +45,4 @@ export function getInternalFolder(config: YamatConfig) {
   return resolve(folderPath)
 }
 
-export function parseJSON(s: string): any {
-  try {
-    return JSON.parse(s)
-  } catch (error) {
-    return error
-  }
-}
-
-export function flattenDeep(arr1: any[]): any[] {
-  return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
-} 
+export {parseJSON, flatDeep as flattenDeep, sleep} from 'misc-utils-of-mine-generic'

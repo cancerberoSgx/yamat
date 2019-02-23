@@ -18,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "executive": "^1.6.3",
+    "misc-utils-of-mine-generic": "0.0.7",
     "p-map": "^2.0.0",
     "shelljs": "^0.8.2",
     "yargs-parser": "^10.1.0"

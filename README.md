@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/cancerberoSgx/yamat.png?branch=master)](https://travis-ci.org/cancerberoSgx/yamat)
 [![Dependencies](https://david-dm.org/cancerberosgx/yamat.svg)](https://david-dm.org/cancerberosgx/yamat)
 
+[![Build Status](https://dev.azure.com/sebastigurin/test1/_apis/build/status/cancerberoSgx.yamat)](https://dev.azure.com/sebastigurin/test1/_build/latest?definitionId=1)
+
 # yamat: Yet Another Monorepo Administration Tool
 
 Tired of the complexities of lerna, rush or yarn workspaces ? This tool solves the problem of mono repos (multiple packages in the same repository) with a very straightforward solution. 

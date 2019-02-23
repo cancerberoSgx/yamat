@@ -6,9 +6,9 @@ import { exec0, initializeProject1 } from './testUtil';
 
 describe('API', () => {
 
-	initializeProject1()
+	// initializeProject1('beforeAll')
 	describe('unlink', () => {
-		initializeProject1()
+		initializeProject1('beforeEach')
 
 		it('unlink', () => {
 			expect(JSON.parse(cat('project1/bar/package.json')).dependencies.foo).toBe("file:../foo")
@@ -41,7 +41,7 @@ describe('API', () => {
 	})
 
 	describe('run by default run all commands no matter if there are erros', () => {
-		initializeProject1()
+		initializeProject1('beforeEach')
 		it('run breakOnError=false should execute all commands no matter if some ends with error', async done => {
 			const result = await run({ rootPath: 'project1', cmd: 'echo "hello" && exit 1', breakOnError: false })
 			expect(result.length).toBe(3)
@@ -60,7 +60,7 @@ describe('API', () => {
 	})
 
 	describe('forceDependenciesLatest', () => {
-		initializeProject1()
+		initializeProject1('beforeEach')
 		it('yamat forceDependenciesLatest should work when executing in a yamat mono-repo root project and update dependencies of all its children', async done => {
 			exec0(`cd project1/foo && npm i --save hrtime-now@1.0.0`)
 			expect(JSON.parse(cat('project1/foo/package.json')).dependencies['hrtime-now']).toContain('1.0.0')

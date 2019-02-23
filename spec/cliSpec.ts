@@ -5,7 +5,8 @@ describe('CLI', () => {
 
 	describe('run', () => {
 
-		initializeProject1('beforeAll')
+		initializeProject1('beforeEach')
+
 		it('run on yamat project if there are no errors must run for all projects', () => {
 
 			const p = exec0(`cd project1 && npm i --save-dev .. && npx yamat run 'echo "hello123"'`)
@@ -20,7 +21,7 @@ describe('CLI', () => {
 	})
 
 	describe('forceDependenciesLatest', () => {
-		initializeProject1('beforeAll')
+		initializeProject1('beforeEach')
 		it('yamat forceDependenciesLatest executed in a yamat project should update dependencies of all its children', () => {
 			exec0(`cd project1/foo && npm i --save hrtime-now@1.0.0`)
 			expect(JSON.parse(cat('project1/foo/package.json')).dependencies['hrtime-now']).toContain('1.0.0')
