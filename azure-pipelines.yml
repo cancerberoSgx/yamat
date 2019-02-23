@@ -1,0 +1,39 @@
+jobs:
+- job: Linux
+
+  pool:
+    vmImage: 'ubuntu 16.04'
+    
+  strategy:
+    matrix:
+      node_10_x:
+        node_version: 10.x
+      node_11_x:
+        node_version: 11.x
+
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: $(node_version)
+
+  - script: |
+      npm install
+      npm test
+
+- job: Windows
+
+  pool:
+    vmImage: 'vs2017-win2016'
+
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+
+  - script: |
+      npm install
+      npm test
+      
+  - task: PublishBuildArtifacts@1
+
+
