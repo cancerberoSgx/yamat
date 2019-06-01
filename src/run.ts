@@ -32,14 +32,14 @@ export async function run(runConfig: RunConfig): Promise<RunResult[]> { // TODO:
           }
           else {
             doBreak=true
-            return { ...p, cmd: runConfig.cmd, path: config.path, config: config }
+            return {...{code: p.code, stdout: p.stdout, stderr: p.stderr}, cmd: runConfig.cmd, path: config.path, config: config }
           }
         }
       } else {
         runConfig.silent && console.log(`Command "${runConfig.cmd}" finish successfully in ${config.path}`)
       }
       cd(originalDir)
-      return { ...p, cmd: runConfig.cmd, path: config.path, config: config }
+      return { ...{code: p.code, stdout: p.stdout, stderr: p.stderr}, cmd: runConfig.cmd, path: config.path, config: config }
     })
     .filter(result => result!==undefined) as RunResult[]
   if (results.length && results.find(r => r.code !== 0)) {

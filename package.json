@@ -1,6 +1,6 @@
 {
   "name": "yamat",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "yamat: Yet Another Mono-Repo Administration Tool",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -10,7 +10,7 @@
     "build": "rm -rf dist && tsc",
     "test2": "npm run build && npx ts-node node_modules/jasmine/bin/jasmine.js spec/testUtilSpec.ts spec/cliSpec.ts spec/apiSpec.ts",
     "test": "npx ts-node node_modules/jasmine/bin/jasmine.js",
-    "clean": "rm -rf node_modules/ package-lock.json",
+    "clean": "rm -rf dist",
     "all": "npm run clean && npm install && npm run build && npm test",
     "prepare": "npm run build"
   },
@@ -18,19 +18,19 @@
   "license": "MIT",
   "dependencies": {
     "executive": "^1.6.3",
-    "misc-utils-of-mine-generic": "0.0.7",
-    "p-map": "^2.0.0",
-    "shelljs": "^0.8.2",
-    "yargs-parser": "^10.1.0"
+    "misc-utils-of-mine-generic": "0.2.7",
+    "p-map": "^2.1.0",
+    "shelljs": "^0.8.3",
+    "yargs-parser": "^13.1.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.8.7",
-    "@types/node": "^10.5.2",
-    "@types/p-map": "^1.1.0",
-    "@types/shelljs": "^0.8.0",
-    "jasmine": "^3.1.0",
-    "ts-node": "^7.0.0",
-    "typescript": "^2.9.2"
+    "@types/jasmine": "^3.3.13",
+    "@types/node": "^12.0.4",
+    "@types/shelljs": "^0.8.5",
+    "@types/p-map": "^2.0.0",
+    "jasmine": "^3.4.0",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.1"
   },
   "repository": "https://github.com/cancerberoSgx/yamat",
   "keywords": [
